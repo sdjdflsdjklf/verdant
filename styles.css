@@ -1,0 +1,348 @@
+/* Obsidian Garden — Plugin UI Styles */
+
+/* ── Note Selector: File Tree ── */
+
+/* Contain the tree and prevent horizontal overflow */
+.tree-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Each tree row: truncate long paths with ellipsis */
+.note-selector-view .tree-item-self,
+.obsidian-garden-note-selector .tree-item-self {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Tree item children also need containment */
+.note-selector-view .tree-item-children,
+.obsidian-garden-note-selector .tree-item-children {
+  overflow: hidden;
+}
+
+/* Folder/file icons — consistent size and no shrink */
+.note-selector-view .tree-item-icon,
+.obsidian-garden-note-selector .tree-item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  text-align: center;
+}
+
+/* Collapse icon */
+.note-selector-view .collapse-icon,
+.obsidian-garden-note-selector .collapse-icon {
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Checkbox spacing */
+.note-selector-view .checkbox,
+.obsidian-garden-note-selector .checkbox {
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+/* ── Note Selector: search bar ── */
+
+.note-selector-view .garden-search-container,
+.obsidian-garden-note-selector .garden-search-container {
+  padding: 8px;
+}
+
+.note-selector-view .garden-search-field,
+.obsidian-garden-note-selector .garden-search-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 8px center;
+}
+
+/* ── Note Selector: action bar ── */
+
+.note-selector-view .nav-buttons-container,
+.obsidian-garden-note-selector .nav-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Status Bar ── */
+
+.obsidian-garden-status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── First-time setup banner ── */
+
+.obsidian-garden-setup-banner {
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid var(--interactive-accent);
+  border-radius: 8px;
+  background: var(--background-secondary);
+}
+
+.obsidian-garden-setup-banner h3 {
+  margin: 0 0 8px 0;
+  color: var(--interactive-accent);
+}
+
+.obsidian-garden-setup-banner ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.obsidian-garden-setup-banner li {
+  margin-bottom: 4px;
+  line-height: 1.6;
+}
+
+/* ── Publish Wizard ── */
+
+/* Step indicator row */
+.wizard-step-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  margin-bottom: 16px;
+}
+
+.wizard-dot {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.wizard-dot.active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* Wizard content area */
+.wizard-content {
+  padding: 0 16px 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Form elements */
+.wizard-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  color: var(--text-normal);
+}
+
+.wizard-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 13px;
+}
+
+.wizard-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 13px;
+  min-height: 60px;
+  resize: vertical;
+}
+
+.wizard-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 13px;
+}
+
+.wizard-file-summary {
+  margin-top: 16px;
+  padding: 8px 12px;
+  background: var(--background-secondary);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Navigation buttons */
+.wizard-nav-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+/* Preview controls */
+.wizard-preview-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.wizard-preview-controls .wizard-label {
+  margin: 0;
+}
+
+.wizard-preview-controls .wizard-select {
+  width: auto;
+  flex: 1;
+}
+
+/* Preview iframe */
+.wizard-preview-frame {
+  background: #fff;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+}
+
+/* ── Settings: Token info icon with tooltip ── */
+
+.setting-info-icon {
+  cursor: help;
+  margin-left: 6px;
+  font-size: 14px;
+  opacity: 0.7;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  color: var(--text-muted);
+  transition: opacity 0.15s ease;
+}
+
+.setting-info-icon:hover {
+  opacity: 1;
+  color: var(--interactive-accent);
+}
+
+/* ── License Purchase Buttons ── */
+
+.obsidian-garden-purchase-buttons {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.obsidian-garden-purchase-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  border: none;
+}
+
+.obsidian-garden-purchase-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.obsidian-garden-purchase-btn--payhip {
+  background: #2ecc71;
+  color: #fff;
+}
+
+.obsidian-garden-purchase-btn--payhip:hover {
+  color: #fff;
+}
+
+/* ── Device Login Modal ── */
+
+.obsidian-garden-device-login {
+  padding: 16px;
+}
+
+.obsidian-garden-device-login h3 {
+  margin: 0 0 12px;
+  color: var(--text-normal);
+}
+
+.obsidian-garden-device-login p {
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.device-login-status {
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+.device-login-code-box {
+  text-align: center;
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  border: 2px solid var(--interactive-accent);
+}
+
+.device-login-code {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+  color: var(--text-normal);
+  user-select: all;
+}
+
+.device-login-guide {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: var(--background-secondary);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.device-login-guide ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.device-login-guide li {
+  margin-bottom: 4px;
+}

@@ -1,0 +1,244 @@
+OG][INFO] Initializing Obsidian Garden...
+VM408 plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+VM408 plugin:obsidian-garden:43 [OG][INFO] No license key provided, running in free tier mode
+VM408 plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+VM408 plugin:obsidian-garden:43 [OG][INFO] Views registered
+VM425 plugin:obsidian-garden:43 [OG][INFO] Initializing Obsidian Garden...
+VM425 plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+VM425 plugin:obsidian-garden:43 [OG][INFO] No license key provided, running in free tier mode
+VM425 plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+VM425 plugin:obsidian-garden:43 [OG][INFO] Views registered
+VM425 plugin:obsidian-garden:43 [OG][INFO] License key validated successfully
+VM425 plugin:obsidian-garden:43 [OG][INFO] License activated successfully Object
+VM446 plugin:obsidian-garden:43 [OG][INFO] Initializing Obsidian Garden...
+VM446 plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+VM446 plugin:obsidian-garden:43 [OG][INFO] License key found, activating...
+VM446 plugin:obsidian-garden:43 [OG][INFO] License key validated successfully
+VM446 plugin:obsidian-garden:43 [OG][INFO] License activated successfully Object
+VM446 plugin:obsidian-garden:43 [OG][INFO] License activated successfully
+VM446 plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+VM446 plugin:obsidian-garden:43 [OG][INFO] Views registered
+VM446 plugin:obsidian-garden:43 [OG][WARN] No CSS cached for theme "default", returning empty
+log @ VM446 plugin:obsidian-garden:43
+VM446 plugin:obsidian-garden:43 [OG][INFO] Scanned 39 notes from vault
+VM446 plugin:obsidian-garden:43 [OG][INFO] Generating site with 39 files
+resources/icons/icon.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+badge.svg:1  Failed to load resource: net::ERR_TIMED_OUT
+github.com/yargs/yargs/workflows/ci/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+devtoolscommunity.herokuapp.com/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+api.travis-ci.com/isaacs/yallist.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+github.com/mathiasbynens/emoji-regex/actions/workflows/main.yml/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+VM446 plugin:obsidian-garden:43 [OG][INFO] Repo {owner}/{repo} exists sdjdflsdjklf my-obsidian-garden
+VM446 plugin:obsidian-garden:43 [OG][INFO] Successfully pushed {count} files to {owner}/{repo}:{branch} 46 sdjdflsdjklf my-obsidian-garden gh-pages
+api.github.com/repos/sdjdflsdjklf/my-obsidian-garden/pages:1  Failed to load resource: the server responded with a status of 409 ()
+VM446 plugin:obsidian-garden:43 [OG][INFO] GitHub Pages enabled for {owner}/{repo} sdjdflsdjklf my-obsidian-garden
+VM446 plugin:obsidian-garden:43 [OG][INFO] Cache updated with 39 files
+8node:electron/js2c/renderer_init:2 Uncaught Error: The WebView must be attached to the DOM and the dom-ready event emitted before this method can be called.
+    at WebViewElement.getWebContentsId (node:electron/js2c/renderer_init:2:26655)
+    at e.<computed> [as isLoading] (node:electron/js2c/renderer_init:2:30751)
+    at HTMLButtonElement.<anonymous> (app.js:1:2797214)
+VM591 plugin:obsidian-garden:43 [OG][INFO] Initializing Obsidian Garden...
+VM591 plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+VM591 plugin:obsidian-garden:43 [OG][INFO] License key found, activating...
+VM591 plugin:obsidian-garden:43 [OG][INFO] License key validated successfully
+VM591 plugin:obsidian-garden:43 [OG][INFO] License activated successfully Object
+VM591 plugin:obsidian-garden:43 [OG][INFO] License activated successfully
+VM591 plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+VM591 plugin:obsidian-garden:43 [OG][INFO] Views registered
+VM591 plugin:obsidian-garden:43 [OG][WARN] No CSS cached for theme "default", returning empty
+log @ VM591 plugin:obsidian-garden:43
+VM591 plugin:obsidian-garden:43 [OG][INFO] Scanned 39 notes from vault
+VM591 plugin:obsidian-garden:43 [OG][INFO] Generating site with 39 files
+resources/icons/icon.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+yargs-logo.png:1  Failed to load resource: net::ERR_CONNECTION_RESET
+devtoolscommunity.herokuapp.com/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+raw.githubusercontent.com/yargs/yargs/main/yargs-logo.png:1  Failed to load resource: net::ERR_CONNECTION_RESET
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+api.travis-ci.com/isaacs/yallist.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+VM591 plugin:obsidian-garden:43 [OG][INFO] Repo {owner}/{repo} exists sdjdflsdjklf my-obsidian-garden
+VM591 plugin:obsidian-garden:43 [OG][INFO] Successfully pushed {count} files to {owner}/{repo}:{branch} 50 sdjdflsdjklf my-obsidian-garden gh-pages
+api.github.com/repos/sdjdflsdjklf/my-obsidian-garden/pages:1  Failed to load resource: the server responded with a status of 409 ()
+VM591 plugin:obsidian-garden:43 [OG][INFO] GitHub Pages enabled for {owner}/{repo} sdjdflsdjklf my-obsidian-garden
+VM591 plugin:obsidian-garden:43 [OG][INFO] Cache updated with 39 files
+2node:electron/js2c/renderer_init:2 Uncaught Error: The WebView must be attached to the DOM and the dom-ready event emitted before this method can be called.
+    at WebViewElement.getWebContentsId (node:electron/js2c/renderer_init:2:26655)
+    at e.<computed> [as isLoading] (node:electron/js2c/renderer_init:2:30751)
+    at HTMLButtonElement.<anonymous> (app.js:1:2797214)
+VM721 plugin:obsidian-garden:43 [OG][INFO] Initializing Obsidian Garden...
+VM721 plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+VM721 plugin:obsidian-garden:43 [OG][INFO] License key found, activating...
+VM721 plugin:obsidian-garden:43 [OG][INFO] License key validated successfully
+VM721 plugin:obsidian-garden:43 [OG][INFO] License activated successfully Object
+VM721 plugin:obsidian-garden:43 [OG][INFO] License activated successfully
+VM721 plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+VM721 plugin:obsidian-garden:43 [OG][INFO] Views registered
+node:electron/js2c/renderer_init:2 Uncaught Error: The WebView must be attached to the DOM and the dom-ready event emitted before this method can be called.
+    at WebViewElement.getWebContentsId (node:electron/js2c/renderer_init:2:26655)
+    at e.<computed> [as isLoading] (node:electron/js2c/renderer_init:2:30751)
+    at HTMLButtonElement.<anonymous> (app.js:1:2797214)
+VM721 plugin:obsidian-garden:43 [OG][WARN] No CSS cached for theme "default", returning empty
+log @ VM721 plugin:obsidian-garden:43
+VM721 plugin:obsidian-garden:43 [OG][INFO] Scanned 39 notes from vault
+VM721 plugin:obsidian-garden:43 [OG][INFO] Generating site with 39 files
+resources/icons/icon.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+yargs-logo.png:1  Failed to load resource: net::ERR_CONNECTION_RESET
+github.com/yargs/yargs/workflows/ci/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+devtoolscommunity.herokuapp.com/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+api.travis-ci.com/isaacs/yallist.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  Failed to load resource: the server responded with a status of 404 ()
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+screenshot.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+github.com/mathiasbynens/emoji-regex/actions/workflows/main.yml/badge.svg:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  Failed to load resource: net::ERR_CONNECTION_TIMED_OUT
+VM721 plugin:obsidian-garden:43 [OG][INFO] Repo {owner}/{repo} exists sdjdflsdjklf my-obsidian-garden
+VM721 plugin:obsidian-garden:43 [OG][INFO] Successfully pushed {count} files to {owner}/{repo}:{branch} 50 sdjdflsdjklf my-obsidian-garden gh-pages
+api.github.com/repos/sdjdflsdjklf/my-obsidian-garden/pages:1  Failed to load resource: the server responded with a status of 409 ()
+VM721 plugin:obsidian-garden:43 [OG][INFO] GitHub Pages enabled for {owner}/{repo} sdjdflsdjklf my-obsidian-garden
+VM721 plugin:obsidian-garden:43 [OG][INFO] Cache updated with 39 files
+2node:electron/js2c/renderer_init:2 Uncaught Error: The WebView must be attached to the DOM and the dom-ready event emitted before this method can be called.
+    at WebViewElement.getWebContentsId (node:electron/js2c/renderer_init:2:26655)
+    at e.<computed> [as isLoading] (node:electron/js2c/renderer_init:2:30751)
+    at HTMLButtonElement.<anonymous> (app.js:1:2797214)
+plugin:obsidian-garden:43 [OG][INFO] Initializing Obsidian Garden...
+plugin:obsidian-garden:43 [OG][INFO] All services registered in DI container
+plugin:obsidian-garden:43 [OG][INFO] License key found, activating...
+plugin:obsidian-garden:43 [OG][INFO] License key validated successfully
+plugin:obsidian-garden:43 [OG][INFO] License activated successfully Object
+plugin:obsidian-garden:43 [OG][INFO] License activated successfully
+plugin:obsidian-garden:43 [OG][INFO] Theme registry initialized with {count} themes 2
+plugin:obsidian-garden:43 [OG][INFO] Views registered
+plugin:obsidian-garden:43 [OG][WARN] No CSS cached for theme "default", returning empty
+log @ plugin:obsidian-garden:43
+plugin:obsidian-garden:1595 [Obsidian Garden] Publishing with config: Object
+plugin:obsidian-garden:43 [OG][INFO] Scanned 39 notes from vault
+plugin:obsidian-garden:43 [OG][INFO] Generating site with 39 files
+resources/icons/icon.png:1  Failed to load resource: net::ERR_FILE_NOT_FOUND
+badge.svg:1  Failed to load resource: net::ERR_CONNECTION_RESET
+devtoolscommunity.herokuapp.com/badge.svg:1  GET https://devtoolscommunity.herokuapp.com/badge.svg net::ERR_CONNECTION_TIMED_OUT
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+github.com/yargs/yargs/workflows/ci/badge.svg:1  GET https://github.com/yargs/yargs/workflows/ci/badge.svg net::ERR_CONNECTION_RESET
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master:1  GET https://api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master 404 (Not Found)
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  GET https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70 net::ERR_CONNECTION_TIMED_OUT
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+api.travis-ci.com/isaacs/yallist.svg?branch=master:1  GET https://api.travis-ci.com/isaacs/yallist.svg?branch=master 404 (Not Found)
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+screenshot.png:1  GET app://obsidian.md/screenshot.png net::ERR_FILE_NOT_FOUND
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+emoji-regex.svg?branch=master:1  GET https://api.travis-ci.com/mathiasbynens/emoji-regex.svg?branch=master 404 (Not Found)
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  GET https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70 net::ERR_CONNECTION_TIMED_OUT
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+screenshot.png:1  GET app://obsidian.md/screenshot.png net::ERR_FILE_NOT_FOUND
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+screenshot.png:1  GET app://obsidian.md/screenshot.png net::ERR_FILE_NOT_FOUND
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70:1  GET https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70 net::ERR_CONNECTION_TIMED_OUT
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+github.com/mathiasbynens/emoji-regex/actions/workflows/main.yml/badge.svg:1  GET https://github.com/mathiasbynens/emoji-regex/actions/workflows/main.yml/badge.svg net::ERR_CONNECTION_RESET
+Image
+i @ app.js:1
+(anonymous) @ app.js:1
+t.render @ app.js:1
+render @ plugin:obsidian-garden:43
+generateFile @ plugin:obsidian-garden:43
+generateSite @ plugin:obsidian-garden:43
+plugin:obsidian-garden:43 [OG][INFO] Repo {owner}/{repo} exists sdjdflsdjklf my-obsidian-garden
+plugin:obsidian-garden:43 [OG][INFO] Successfully pushed {count} files to {owner}/{repo}:{branch} 50 sdjdflsdjklf my-obsidian-garden gh-pages
+plugin:obsidian-garden:43  POST https://api.github.com/repos/sdjdflsdjklf/my-obsidian-garden/pages 409 (Conflict)
+executeFetch @ plugin:obsidian-garden:43
+t @ plugin:obsidian-garden:43
+request @ plugin:obsidian-garden:43
+post @ plugin:obsidian-garden:43
+enablePages @ plugin:obsidian-garden:43
+enablePages @ plugin:obsidian-garden:43
+publish @ plugin:obsidian-garden:43
+plugin:obsidian-garden:43 [OG][INFO] GitHub Pages enabled for {owner}/{repo} sdjdflsdjklf my-obsidian-garden
+plugin:obsidian-garden:43 [OG][INFO] Cache updated with 39 files
