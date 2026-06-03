@@ -234,8 +234,8 @@ describe("Full Publish E2E", (): void => {
       expect(pushCall![3]).toBe("gh-pages");
       const files: unknown = pushCall![4];
       expect(Array.isArray(files)).toBe(true);
-      // Should have: 3 note files + index.html + navigation.json + search.json + tags/index.html + 3 tag-detail pages + .nojekyll + feed.xml + assets/theme.css
-      expect((files as unknown[]).length).toBe(14);
+      // Should have: 3 note files + index.html + navigation.json + search.json + tags/index.html + 3 tag-detail pages + .nojekyll + feed.xml + assets/theme.css + CNAME = 15
+      expect((files as unknown[]).length).toBe(15);
       expect(pushCall![5]).toBe("chore: update garden");
     });
 

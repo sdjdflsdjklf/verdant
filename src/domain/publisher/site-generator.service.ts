@@ -227,8 +227,22 @@ export class SiteGeneratorService {
 
     const feedXml: string = this.themeRenderer.renderFeed(feedEntries, config);
 
+    // Generate assets/theme.css if no custom CSS is provided
+    const assetsFiles: SiteGeneratedFile[] = [];
+    if ((config.customCss ?? "").length === 0) {
+      const themeCss: string = this.themeRenderer.getCSS(config.themeId ?? "default");
+      assetsFiles.push({
+        html: themeCss,
+        relativePath: "assets/theme.css",
+        title: "Theme CSS",
+        tags: [],
+        excerpt: "",
+        date: undefined,
+      });
+    }
+
     return {
-      files: allFiles,
+      files: [...allFiles, ...assetsFiles],
       indexHtml,
       navigation,
       tags,

@@ -367,8 +367,8 @@ describe("PublisherService ↔ GitHubApiPort Integration", (): void => {
       expect(pushCalls).toHaveLength(1);
 
       const files: GitFileEntry[] = pushCalls[0]!.args[4] as GitFileEntry[];
-      // 3 note files + index.html + navigation.json + search.json + tags/index.html + tags/test/index.html + .nojekyll + feed.xml + assets/theme.css
-      expect(files.length).toBe(11);
+      // 3 note files + index.html + navigation.json + search.json + tags/index.html + tags/test/index.html + .nojekyll + feed.xml + assets/theme.css + CNAME = 12
+      expect(files.length).toBe(12);
     });
 
     it("should publish all notes successfully", async (): Promise<void> => {

@@ -185,7 +185,7 @@ const result: GeneratedSite = await service.generateSite(
         defaultConfig,
       );
 
-      expect(result.files).toHaveLength(4);
+      expect(result.files).toHaveLength(5); // 2 notes + 2 tag pages + assets/theme.css
       expect(result.navigation).toHaveLength(2);
       expect(result.navigation[0]?.title).toBe("Note One");
       expect(result.tags["dev"]).toBeDefined();
