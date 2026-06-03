@@ -84,6 +84,7 @@ Some content here for excerpt.`;
         edges: new Map(),
         slugToTitle: new Map(),
         backlinks: new Map(),
+        slugToRepoPath: new Map(),
       }),
       getRelatedNotes: jest.fn().mockReturnValue([]),
       getPrevNext: jest.fn().mockReturnValue({}),

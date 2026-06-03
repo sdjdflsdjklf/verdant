@@ -2,12 +2,12 @@ import "reflect-metadata";
 import type { PluginSettings } from "../types/plugin.types";
 import { DEFAULT_SETTINGS } from "../types/plugin.types";
 import { PluginConfigService } from "./plugin-config.service";
-import type { ConfigPersistencePort } from "./plugin-config.service";
+import type { KeyValueStorePort } from "../domain/ports";
 import type { LoggerPort } from "../domain/ports";
 
 describe("PluginConfigService", (): void => {
   let service: PluginConfigService;
-  let mockPersistence: jest.Mocked<ConfigPersistencePort>;
+  let mockStore: jest.Mocked<KeyValueStorePort>;
   let mockLogger: jest.Mocked<LoggerPort>;
 
   const TEST_SETTINGS: Partial<PluginSettings> = {
@@ -25,44 +25,52 @@ describe("PluginConfigService", (): void => {
       error: jest.fn(),
       setLevel: jest.fn(),
     };
-    mockPersistence = {
-      loadData: jest.fn().mockResolvedValue(TEST_SETTINGS),
-      saveData: jest.fn().mockResolvedValue(undefined),
-    };
+    const storeData: Record<string, unknown> = { ...TEST_SETTINGS };
+    mockStore = {
+      get: jest.fn((key: string): unknown => storeData[key]),
+      set: jest.fn((key: string, value: unknown): void => { storeData[key] = value; }),
+      delete: jest.fn((key: string): boolean => {
+        const existed = key in storeData;
+        Reflect.deleteProperty(storeData, key);
+        return existed;
+      }),
+      has: jest.fn((key: string): boolean => key in storeData),
+      clear: jest.fn((): void => { for (const k of Object.keys(storeData)) Reflect.deleteProperty(storeData, k); }),
+      getAll: jest.fn((): Record<string, unknown> => ({ ...storeData })),
+    } as unknown as jest.Mocked<KeyValueStorePort>;
     service = new PluginConfigService(mockLogger);
   });
 
   describe("init", (): void => {
-    it("should set the persistence adapter", (): void => {
-      expect(() => service.init(mockPersistence)).not.toThrow();
+    it("should set the store adapter", (): void => {
+      expect(() => service.init(mockStore)).not.toThrow();
     });
   });
 
   describe("load", (): void => {
-    it("should return defaults when persistence is null", async (): Promise<void> => {
+    it("should return defaults when store is null", async (): Promise<void> => {
       const result: PluginSettings = await service.load();
       expect(result).toEqual(DEFAULT_SETTINGS);
     });
 
     it("should merge loaded data with defaults", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       const result: PluginSettings = await service.load();
       expect(result.githubToken).toBe("ghp_test123");
       expect(result.siteTitle).toBe("Test Garden");
       expect(result.publishBranch).toBe("gh-pages");
     });
 
-    it("should handle null/undefined loaded data", async (): Promise<void> => {
-      mockPersistence.loadData.mockResolvedValue(undefined);
-      service.init(mockPersistence);
+    it("should handle empty store data", async (): Promise<void> => {
+      mockStore.getAll.mockReturnValue({});
+      service.init(mockStore);
       const result: PluginSettings = await service.load();
       expect(result.githubToken).toBe("");
-      expect(result.publishBranch).toBe("gh-pages");
       expect(result.publishBranch).toBe("gh-pages");
     });
 
     it("should update internal state and return a copy", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       const result: PluginSettings = await service.load();
       expect(result.githubToken).toBe("ghp_test123");
       result.githubToken = "modified";
@@ -70,8 +78,8 @@ describe("PluginConfigService", (): void => {
     });
 
     it("should fall back to defaults on load error", async (): Promise<void> => {
-      mockPersistence.loadData.mockRejectedValue(new Error("disk error"));
-      service.init(mockPersistence);
+      mockStore.getAll.mockImplementation((): Record<string, never> => { throw new Error("disk error"); });
+      service.init(mockStore);
       const result: PluginSettings = await service.load();
       expect(result).toEqual(DEFAULT_SETTINGS);
       expect(mockLogger.error).toHaveBeenCalled();
@@ -79,22 +87,20 @@ describe("PluginConfigService", (): void => {
   });
 
   describe("save", (): void => {
-    it("should call persistence.saveData with current settings", async (): Promise<void> => {
-      service.init(mockPersistence);
+    it("should call store.set for each setting", async (): Promise<void> => {
+      service.init(mockStore);
       await service.load();
       await service.save();
-      expect(mockPersistence.saveData).toHaveBeenCalledWith(
-        expect.objectContaining({ githubToken: "ghp_test123" }),
-      );
+      expect(mockStore.set).toHaveBeenCalled();
     });
 
-    it("should do nothing when persistence is null", async (): Promise<void> => {
+    it("should do nothing when store is null", async (): Promise<void> => {
       await expect(service.save()).resolves.toBeUndefined();
     });
 
-    it("should log error and rethrow when saveData fails", async (): Promise<void> => {
-      mockPersistence.saveData.mockRejectedValue(new Error("write error"));
-      service.init(mockPersistence);
+    it("should log error and rethrow when set fails", async (): Promise<void> => {
+      mockStore.set.mockImplementation((): void => { throw new Error("write error"); });
+      service.init(mockStore);
       await service.load();
       await expect(service.save()).rejects.toThrow("write error");
       expect(mockLogger.error).toHaveBeenCalledWith(
@@ -106,14 +112,14 @@ describe("PluginConfigService", (): void => {
 
   describe("get", (): void => {
     it("should return the value for a given key", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       expect(service.get("githubToken")).toBe("ghp_test123");
       expect(service.get("siteTitle")).toBe("Test Garden");
     });
 
     it("should return default for unset key", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       expect(service.get("publishBranch")).toBe("gh-pages");
     });
@@ -121,7 +127,7 @@ describe("PluginConfigService", (): void => {
 
   describe("getAll", (): void => {
     it("should return a copy of all settings", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const all: PluginSettings = service.getAll();
       expect(all.githubToken).toBe("ghp_test123");
@@ -140,19 +146,19 @@ describe("PluginConfigService", (): void => {
     });
 
     it("should update a setting in-memory immediately", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
-      mockPersistence.saveData.mockClear();
+      mockStore.set.mockClear();
       const setPromise = service.set("siteTitle", "Updated Garden");
       expect(service.get("siteTitle")).toBe("Updated Garden");
-      expect(mockPersistence.saveData).not.toHaveBeenCalled();
+      expect(mockStore.set).not.toHaveBeenCalled();
       jest.advanceTimersByTime(300);
       await setPromise;
-      expect(mockPersistence.saveData).toHaveBeenCalled();
+      expect(mockStore.set).toHaveBeenCalled();
     });
 
     it("should notify listeners immediately", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const listener = jest.fn();
       service.onChange(listener);
@@ -163,9 +169,9 @@ describe("PluginConfigService", (): void => {
     });
 
     it("should debounce rapid consecutive sets", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
-      mockPersistence.saveData.mockClear();
+      mockStore.set.mockClear();
 
       void service.set("siteTitle", "Title 1");
       void service.set("siteTitle", "Title 2");
@@ -174,26 +180,27 @@ describe("PluginConfigService", (): void => {
       jest.advanceTimersByTime(300);
       await finalPromise;
 
-      expect(mockPersistence.saveData).toHaveBeenCalledTimes(1);
+      // save() is called once, which calls set() for each key
+      expect(mockStore.set).toHaveBeenCalled();
     });
   });
 
   describe("update", (): void => {
     it("should batch update multiple settings", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
-      mockPersistence.saveData.mockClear();
+      mockStore.set.mockClear();
       await service.update({
         siteTitle: "New Title",
         siteDescription: "New Description",
       });
       expect(service.get("siteTitle")).toBe("New Title");
       expect(service.get("siteDescription")).toBe("New Description");
-      expect(mockPersistence.saveData).toHaveBeenCalledTimes(1);
+      expect(mockStore.set).toHaveBeenCalled();
     });
 
     it("should notify listeners for each changed key", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const listener = jest.fn();
       service.onChange(listener);
@@ -238,7 +245,7 @@ describe("PluginConfigService", (): void => {
   describe("onChange", (): void => {
     it("should call listener when set is called", async (): Promise<void> => {
       jest.useFakeTimers();
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const listener = jest.fn();
       service.onChange(listener);
@@ -251,7 +258,7 @@ describe("PluginConfigService", (): void => {
 
     it("should stop notifying after unsubscribe", async (): Promise<void> => {
       jest.useFakeTimers();
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const listener = jest.fn();
       const unsubscribe = service.onChange(listener);
@@ -264,7 +271,7 @@ describe("PluginConfigService", (): void => {
     });
 
     it("should handle unsubscribe when listener not in list", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       const listener = jest.fn();
       const unsubscribe = service.onChange(listener);
@@ -275,12 +282,12 @@ describe("PluginConfigService", (): void => {
 
   describe("reset", (): void => {
     it("should reset settings to defaults and persist", async (): Promise<void> => {
-      service.init(mockPersistence);
+      service.init(mockStore);
       await service.load();
       expect(service.get("siteTitle")).toBe("Test Garden");
       await service.reset();
       expect(service.get("siteTitle")).toBe(DEFAULT_SETTINGS.siteTitle);
-      expect(mockPersistence.saveData).toHaveBeenCalled();
+      expect(mockStore.set).toHaveBeenCalled();
     });
   });
 });

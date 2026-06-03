@@ -126,6 +126,8 @@ export class SiteGeneratorService {
     let relatedNotes: RelatedNoteEntry[] = [];
     let prevTitle: string | undefined;
     let nextTitle: string | undefined;
+    let prevPath: string | undefined;
+    let nextPath: string | undefined;
 
     if (linkGraph) {
       relatedNotes = this.linkGraphService.getRelatedNotes(slug, linkGraph);
@@ -134,15 +136,17 @@ export class SiteGeneratorService {
       const prevNext = this.linkGraphService.getPrevNext(slug, linkGraph, sortedSlugs);
       if (prevNext.prev) {
         prevTitle = linkGraph.slugToTitle.get(prevNext.prev) ?? prevNext.prev;
+        prevPath = linkGraph.slugToRepoPath.get(prevNext.prev) ?? `${prevNext.prev}/index.html`;
       }
       if (prevNext.next) {
         nextTitle = linkGraph.slugToTitle.get(prevNext.next) ?? prevNext.next;
+        nextPath = linkGraph.slugToRepoPath.get(prevNext.next) ?? `${prevNext.next}/index.html`;
       }
     }
 
     const noteHtml: string = this.themeRenderer.renderNote(
       processedHtml, title, tags, dateStr, config,
-      relatedNotes, giscusConfig, prevTitle, nextTitle,
+      relatedNotes, giscusConfig, prevTitle, nextTitle, prevPath, nextPath,
     );
 
     return {
@@ -220,7 +224,7 @@ export class SiteGeneratorService {
       .filter((f): f is SiteGeneratedFile & { date: string } => f.date !== undefined)
       .map((f) => ({
         title: f.title,
-        slug: fileSlug(f.relativePath),
+        slug: f.relativePath.replace(/\/index\.html$/, ""),
         date: f.date,
         excerpt: f.excerpt,
       }));

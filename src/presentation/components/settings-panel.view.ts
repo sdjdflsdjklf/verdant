@@ -21,6 +21,7 @@ export class SettingsPanelView extends PluginSettingTab {
 
     this.addGitHubSection(containerEl);
     this.addSiteSection(containerEl);
+    this.addUpgradeSection(containerEl);
   }
 
   private addGitHubSection(container: HTMLElement): void {
@@ -80,6 +81,23 @@ export class SettingsPanelView extends PluginSettingTab {
             await this.configService.set("publishBranch", val);
           });
       });
+  }
+
+  private addUpgradeSection(container: HTMLElement): void {
+    container.createEl("h2", { text: "Upgrade to Pro" });
+
+    container.createEl("p", {
+      text: "Unlock unlimited notes and more features. Purchase on Payhip, then paste the license key in the Pro version to activate.",
+    });
+
+    const buttonsContainer: HTMLDivElement = container.createDiv({ cls: "obsidian-garden-purchase-buttons" });
+
+    const payhipLink: HTMLAnchorElement = buttonsContainer.createEl("a", {
+      cls: "obsidian-garden-purchase-btn obsidian-garden-purchase-btn--payhip",
+      href: "https://payhip.com/b/p79eW",
+      text: "Payhip — $19",
+    });
+    payhipLink.target = "_blank";
   }
 
   private addSiteSection(container: HTMLElement): void {

@@ -119,6 +119,8 @@ export class ThemeRenderer {
     giscusConfig?: GiscusConfig,
     prevTitle?: string,
     nextTitle?: string,
+    prevPath?: string,
+    nextPath?: string,
   ): string {
     const baseUrl = this.escapeHtml(config.baseUrl);
     const tagsHtml = tags
@@ -151,7 +153,7 @@ export class ThemeRenderer {
       .replace(/\{\{relatedNotesHtml\}\}/g, relatedNotesHtml)
       .replace(/\{\{commentsHtml\}\}/g, commentsHtml);
 
-    const pagination = this.buildPagination(prevTitle, nextTitle, config.baseUrl);
+    const pagination = this.buildPagination(prevTitle, nextTitle, config.baseUrl, prevPath, nextPath);
     const noteWithPagination = noteHtml
       .replace(/\{\{pagination\}\}/g, pagination);
 
@@ -291,7 +293,7 @@ ${entryXml}
       return "";
     }
     return `<ul class="garden-related-list">
-${relatedNotes.map((r: RelatedNoteEntry): string => `      <li class="garden-related-item"><a href="${this.escapeHtml(baseUrl)}/${this.escapeHtml(r.slug)}/">${this.escapeHtml(r.title)}</a></li>`).join("\n")}
+${relatedNotes.map((r: RelatedNoteEntry): string => `      <li class="garden-related-item"><a href="${this.escapeHtml(baseUrl)}/${pathToUrl(r.repoPath)}">${this.escapeHtml(r.title)}</a></li>`).join("\n")}
     </ul>`;
   }
 
@@ -535,15 +537,15 @@ ${relatedNotes.map((r: RelatedNoteEntry): string => `      <li class="garden-rel
 </script>`;
   }
 
-  private buildPagination(prevTitle: string | undefined, nextTitle: string | undefined, baseUrl: string): string {
+  private buildPagination(prevTitle: string | undefined, nextTitle: string | undefined, baseUrl: string, prevPath?: string, nextPath?: string): string {
     if (!prevTitle && !nextTitle) {
       return "";
     }
     const prevHtml = prevTitle
-      ? `<a href="${this.escapeHtml(baseUrl)}/${slugify(prevTitle)}/">← ${this.escapeHtml(prevTitle)}</a>`
+      ? `<a href="${this.escapeHtml(baseUrl)}/${prevPath ? pathToUrl(prevPath) : `${slugify(prevTitle)}/`}">← ${this.escapeHtml(prevTitle)}</a>`
       : "<span></span>";
     const nextHtml = nextTitle
-      ? `<a href="${this.escapeHtml(baseUrl)}/${slugify(nextTitle)}/">${this.escapeHtml(nextTitle)} →</a>`
+      ? `<a href="${this.escapeHtml(baseUrl)}/${nextPath ? pathToUrl(nextPath) : `${slugify(nextTitle)}/`}">${this.escapeHtml(nextTitle)} →</a>`
       : "<span></span>";
     const pipe = prevTitle && nextTitle ? `<span class="garden-pipe"> | </span>` : "";
     return prevHtml + pipe + nextHtml;

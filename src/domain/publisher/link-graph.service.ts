@@ -23,16 +23,28 @@ function fileSlug(relativePath: string): string {
   );
 }
 
+function notePathToRepoPath(relativePath: string): string {
+  const base = relativePath
+    .replace(/\.md$/i, "")
+    .replace(/\\/g, "/")
+    .split("/")
+    .map((segment) => slugify(segment))
+    .join("/");
+  return `${base}/index.html`;
+}
+
 export interface LinkGraph {
   edges: Map<string, Set<string>>;
   slugToTitle: Map<string, string>;
   backlinks: Map<string, Set<string>>;
+  slugToRepoPath: Map<string, string>;
 }
 
 export interface RelatedNoteEntry {
   slug: string;
   title: string;
   score: number;
+  repoPath: string;
 }
 
 @injectable()
@@ -41,11 +53,13 @@ export class LinkGraphService {
     const edges: Map<string, Set<string>> = new Map();
     const slugToTitle: Map<string, string> = new Map();
     const backlinks: Map<string, Set<string>> = new Map();
+    const slugToRepoPath: Map<string, string> = new Map();
 
     const slugToFile: Map<string, PublishFile> = new Map();
     for (const note of notes) {
       const slug: string = fileSlug(note.relativePath);
       slugToFile.set(slug, note);
+      slugToRepoPath.set(slug, notePathToRepoPath(note.relativePath));
     }
 
     const linkNameToFileSlug: Map<string, string> = new Map();
@@ -78,7 +92,7 @@ export class LinkGraphService {
       }
     }
 
-    return { edges, slugToTitle, backlinks };
+    return { edges, slugToTitle, backlinks, slugToRepoPath };
   }
 
   public getRelatedNotes(
@@ -123,6 +137,7 @@ export class LinkGraphService {
           slug: candidate,
           title: graph.slugToTitle.get(candidate) ?? candidate,
           score: jaccard,
+          repoPath: graph.slugToRepoPath.get(candidate) ?? `${candidate}/index.html`,
         });
       }
     }

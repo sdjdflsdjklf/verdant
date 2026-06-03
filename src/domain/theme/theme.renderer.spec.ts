@@ -151,8 +151,8 @@ describe("ThemeRenderer", (): void => {
 
     it("should include related notes HTML when provided", (): void => {
       const relatedNotes: RelatedNoteEntry[] = [
-        { slug: "note-b", title: "Note B", score: 0.5 },
-        { slug: "note-c", title: "Note C", score: 0.3 },
+        { slug: "note-b", title: "Note B", score: 0.5, repoPath: "notes/note-b/index.html" },
+        { slug: "note-c", title: "Note C", score: 0.3, repoPath: "notes/note-c/index.html" },
       ];
 
       const html: string = renderer.renderNote(
@@ -305,14 +305,14 @@ describe("ThemeRenderer", (): void => {
   describe("buildRelatedNotesHtml", (): void => {
     it("should build related notes list", (): void => {
       const relatedNotes: RelatedNoteEntry[] = [
-        { slug: "note-a", title: "Note A", score: 0.8 },
+        { slug: "note-a", title: "Note A", score: 0.8, repoPath: "notes/note-a/index.html" },
       ];
 
       const html: string = renderer.buildRelatedNotesHtml(relatedNotes, "https://example.com");
       expect(html).toContain("garden-related-list");
       expect(html).toContain("garden-related-item");
       expect(html).toContain("Note A");
-      expect(html).toContain("https://example.com/note-a/");
+      expect(html).toContain("https://example.com/notes/note-a/");
     });
 
     it("should return empty string for empty list", (): void => {

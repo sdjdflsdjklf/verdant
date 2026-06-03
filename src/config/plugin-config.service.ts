@@ -1,19 +1,10 @@
 import { injectable, inject } from "tsyringe";
 import type { PluginSettings } from "../types/plugin.types";
 import { DEFAULT_SETTINGS } from "../types/plugin.types";
-import type { LoggerPort } from "../domain/ports";
+import type { LoggerPort, KeyValueStorePort } from "../domain/ports";
 import { DI_TOKENS } from "../di/tokens";
 import { ErrorBoundary } from "../bootstrap/error-boundary";
 import { CONFIG_SCHEMA, type ConfigFieldDescriptor } from "./config.schema";
-
-/**
- * Interface for the plugin's data persistence layer.
- * In Obsidian, this is implemented by Plugin.loadData/saveData.
- */
-export interface ConfigPersistencePort {
-  loadData(): Promise<unknown>;
-  saveData(data: unknown): Promise<void>;
-}
 
 export type ConfigChangeListener = (key: keyof PluginSettings, value: unknown) => void;
 
@@ -22,7 +13,7 @@ export class PluginConfigService {
   private static readonly DEBOUNCE_MS = 300;
 
   private settings: PluginSettings = { ...DEFAULT_SETTINGS };
-  private persistence: ConfigPersistencePort | null = null;
+  private store: KeyValueStorePort | null = null;
   private listeners: ConfigChangeListener[] = [];
   private savePromise: Promise<void> = Promise.resolve();
   private saveTimer?: ReturnType<typeof setTimeout>;
@@ -32,21 +23,21 @@ export class PluginConfigService {
     @inject(DI_TOKENS.LoggerService) private readonly logger: LoggerPort,
   ) {}
 
-  /** Initialize with the persistence adapter (the plugin instance). */
-  init(persistence: ConfigPersistencePort): void {
-    this.persistence = persistence;
+  /** Initialize with the key-value store for persistence. */
+  init(store: KeyValueStorePort): void {
+    this.store = store;
   }
 
   /** Load settings from persistent storage, merging with defaults. */
   async load(): Promise<PluginSettings> {
-    if (this.persistence === null) {
+    if (this.store === null) {
       return { ...DEFAULT_SETTINGS };
     }
-    const persistence = this.persistence;
+    const store = this.store;
     return ErrorBoundary.safeExecute(
       async (): Promise<PluginSettings> => {
-        const raw = (await persistence.loadData()) as Partial<PluginSettings> | undefined;
-        this.settings = { ...DEFAULT_SETTINGS, ...(raw ?? {}) };
+        const raw = store.getAll<Partial<PluginSettings>>();
+        this.settings = { ...DEFAULT_SETTINGS, ...raw };
         return { ...this.settings };
       },
       { ...DEFAULT_SETTINGS },
@@ -57,7 +48,7 @@ export class PluginConfigService {
 
   /** Save current settings to persistent storage. */
   async save(): Promise<void> {
-    if (this.persistence === null) {
+    if (this.store === null) {
       return;
     }
     if (this.saveTimer !== undefined) {
@@ -67,9 +58,11 @@ export class PluginConfigService {
       this.pendingResolve = undefined;
     }
     const snapshot: PluginSettings = { ...this.settings };
-    const persist = this.persistence;
+    const store = this.store;
     this.savePromise = this.savePromise.then(async (): Promise<void> => {
-      await persist.saveData(snapshot);
+      for (const [key, value] of Object.entries(snapshot)) {
+        store.set(key, value);
+      }
     }).catch((error: unknown): void => {
       this.logger.error('Failed to save plugin config', error);
       throw error;

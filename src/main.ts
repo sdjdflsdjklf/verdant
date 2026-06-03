@@ -30,8 +30,10 @@ export default class ObsidianGardenPlugin extends Plugin {
     // Register Obsidian runtime objects for infrastructure services
     container.register(DI_TOKENS.ObsidianApp as InjectionToken, { useValue: this.app });
 
+    // Create settings store and initialize config service through it
+    const settingsStore: PluginDataStore = PluginDataStore.create("settings");
     const configService: PluginConfigService = container.resolve<PluginConfigService>(DI_TOKENS.PluginConfigService);
-    configService.init(this);
+    configService.init(settingsStore);
     this.settings = await configService.load();
 
     this.initializer = container.resolve(PluginInitializer);
