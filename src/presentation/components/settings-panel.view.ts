@@ -94,7 +94,7 @@ export class SettingsPanelView extends PluginSettingTab {
 
     const payhipLink: HTMLAnchorElement = buttonsContainer.createEl("a", {
       cls: "obsidian-garden-purchase-btn obsidian-garden-purchase-btn--payhip",
-      href: "https://payhip.com/b/p79eW",
+      href: "https://payhip.com/b/RnYOS",
       text: "Payhip — $19",
     });
     payhipLink.target = "_blank";
