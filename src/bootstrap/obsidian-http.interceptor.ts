@@ -34,8 +34,8 @@ function shouldUseObsidianRequest(url: string): boolean {
 }
 
 function makeNodeHttpsRequest(config: HttpRequestConfig): Promise<HttpResponse> {
-  const g = globalThis as Record<string, unknown>;
-  const nodeRequire: NodeRequire | undefined = g.require as NodeRequire | undefined;
+  const g = window as unknown as Record<string, unknown>;
+  const nodeRequire: NodeJS.Require | undefined = g.require as NodeJS.Require | undefined;
   if (nodeRequire === undefined) {
     return makeObsidianRequest(config);
   }
@@ -169,7 +169,7 @@ async function doRequestWithRetry(
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     if (attempt > 0) {
       const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
-      await new Promise<void>((resolve): void => { setTimeout(resolve, delay); });
+      await new Promise<void>((resolve): void => { window.setTimeout(resolve, delay); });
     }
     const response = await doRequest();
     lastResponse = response;
@@ -223,7 +223,7 @@ async function makeObsidianRequest(
 
       return {
         status: response.status,
-        headers: response.headers as Record<string, string>,
+        headers: response.headers,
         data,
       };
     } catch (error: unknown) {
@@ -254,7 +254,7 @@ async function makeObsidianRequest(
   })();
 
   const timeoutPromise: Promise<HttpResponse> = new Promise<HttpResponse>((resolve): void => {
-    setTimeout((): void => {
+    window.setTimeout((): void => {
       resolve({
         status: 0,
         headers: {},

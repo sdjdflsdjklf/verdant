@@ -15,12 +15,6 @@
     "test:coverage": "jest --coverage --passWithNoTests",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
   "keywords": [
     "obsidian",
     "plugin",
@@ -53,7 +47,6 @@
     "husky": "^9.1.7",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
-    "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
     "ts-jest": "^29.4.9",
     "typescript": "^6.0.3"

@@ -21,246 +21,7 @@ import { ErrorBoundary } from "../../bootstrap/error-boundary";
 
 type WizardStep = "info" | "preview" | "publish";
 
-const WIZARD_TRANSITION_STYLES = `
-.modal:has(.obsidian-garden-publish-wizard) {
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 16px !important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
-}
-
-.modal:has(.obsidian-garden-publish-wizard) .modal-title {
-  display: none !important;
-}
-
-.obsidian-garden-publish-wizard {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-
-.wizard-step-indicator {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 16px 24px 26px;
-  background: var(--background-primary, #ffffff);
-  flex-shrink: 0;
-}
-
-.wizard-step-connector {
-  width: 24px;
-  height: 2px;
-  background: var(--background-modifier-border, #e7e5e4);
-  border-radius: 1px;
-  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.wizard-step-connector.active {
-  background: var(--text-accent, #4f46e5);
-}
-
-.wizard-dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted, #a8a29e);
-  background: var(--background-secondary, #f2f0eb);
-  cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  position: relative;
-}
-
-.wizard-dot.active {
-  background: var(--text-accent, #4f46e5);
-  color: #ffffff;
-  font-weight: 600;
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
-  transform: scale(1.08);
-}
-
-.wizard-dot.completed {
-  background: rgba(79, 70, 229, 0.12);
-  color: var(--text-accent, #4f46e5);
-}
-
-.wizard-dot:not(.active):not(.completed):hover {
-  background: var(--background-modifier-hover, rgba(0,0,0,0.06));
-  transform: scale(1.1);
-}
-
-.wizard-dot-label {
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 500;
-  white-space: nowrap;
-  color: var(--text-muted, #a8a29e);
-  transition: color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.wizard-dot.active .wizard-dot-label {
-  color: var(--text-accent, #4f46e5);
-  font-weight: 600;
-}
-
-.wizard-content-wrapper {
-  overflow: hidden;
-  flex: 1;
-  min-height: 0;
-}
-
-.wizard-content {
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
-  display: flex;
-  flex-direction: column;
-}
-
-.wizard-content.fade-out-forward {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-
-.wizard-content.fade-out-back {
-  opacity: 0;
-  transform: translateX(40px);
-}
-
-.wizard-content.fade-in-forward {
-  opacity: 0;
-  transform: translateX(40px);
-}
-
-.wizard-content.fade-in-back {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-
-.wizard-content.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.wizard-info-step,
-.wizard-publish-step {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px;
-}
-
-.wizard-preview-layout {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-}
-
-.wizard-preview-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.wizard-preview-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 36px;
-  flex-shrink: 0;
-}
-
-.wizard-full-preview-btn {
-  display: inline-flex;
-  align-items: center;
-  height: 30px;
-  padding: 0 12px;
-  border-radius: 6px;
-  border: 1px solid #10b981;
-  background: #ecfdf5;
-  color: #059669;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.wizard-full-preview-btn:hover {
-  background: #d1fae5;
-  transform: scale(1.03);
-}
-
-.wizard-full-preview-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.wizard-nav-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 0 24px;
-  height: 52px;
-  border-top: 1px solid var(--background-modifier-border, #e7e5e4);
-  background: var(--background-primary, #ffffff);
-  flex-shrink: 0;
-}
-
-.wizard-nav-buttons button:not(.mod-cta) {
-  transition: all 0.2s ease;
-}
-
-.wizard-nav-buttons button:not(.mod-cta):hover {
-  transform: scale(1.03);
-}
-
-.wizard-nav-buttons button.mod-cta {
-  transition: all 0.2s ease;
-}
-
-.wizard-nav-buttons button.mod-cta:hover {
-  transform: scale(1.03);
-}
-
-.wizard-publish-progress {
-  animation: wizard-progress-pulse 2s ease-in-out infinite;
-}
-
-@keyframes wizard-progress-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.wizard-publish-success {
-  animation: wizard-success-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes wizard-success-in {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.wizard-publish-error {
-  animation: wizard-error-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes wizard-error-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-`;
+const doc = (typeof activeDocument !== "undefined" ? activeDocument : document) as Document;
 
 export class PublishWizardView extends Modal {
   private currentStep: WizardStep = "info";
@@ -290,7 +51,7 @@ export class PublishWizardView extends Modal {
     const { contentEl, modalEl, titleEl, containerEl } = this;
 
     if (titleEl !== undefined) {
-      titleEl.style.display = "none";
+      titleEl.style.setProperty("display", "none");
     }
 
     modalEl.style.setProperty("display", "flex", "important");
@@ -308,8 +69,8 @@ export class PublishWizardView extends Modal {
     contentEl.style.setProperty("flex-direction", "column", "important");
     contentEl.style.setProperty("padding", "0", "important");
 
-    containerEl.style.width = "";
-    containerEl.style.maxWidth = "";
+    containerEl.style.removeProperty("width");
+    containerEl.style.removeProperty("max-width");
 
     contentEl.empty();
     contentEl.addClass("obsidian-garden-publish-wizard");
@@ -332,7 +93,7 @@ export class PublishWizardView extends Modal {
 
     const bg: HTMLElement | null = this.modalEl.parentElement?.querySelector(".modal-bg") ?? null;
     if (bg !== null) {
-      bg.style.pointerEvents = "none";
+      bg.style.setProperty("pointer-events", "none");
     }
   }
 
@@ -418,11 +179,11 @@ export class PublishWizardView extends Modal {
     const footerH: number = this.navButtons?.offsetHeight ?? 0;
     const available: number = Math.max(0, containerHeight - headerH - footerH);
 
-    this.contentArea.style.height = `${available}px`;
+    this.contentArea.style.setProperty("height", `${available}px`);
     if (this.previewLayout !== null) {
-      this.previewLayout.style.height = `${available}px`;
+      this.previewLayout.style.setProperty("height", `${available}px`);
       if (this.previewFrame !== undefined) {
-        this.previewFrame.style.height = `${Math.max(0, available - 48)}px`;
+        this.previewFrame.style.setProperty("height", `${Math.max(0, available - 48)}px`);
       }
     }
   }
@@ -469,15 +230,15 @@ export class PublishWizardView extends Modal {
     }
 
     if (step !== "preview") {
-      requestAnimationFrame((): void => {
-        requestAnimationFrame((): void => {
+      window.requestAnimationFrame((): void => {
+        window.requestAnimationFrame((): void => {
           this.syncModalHeight();
         });
       });
     }
 
-    requestAnimationFrame((): void => {
-      requestAnimationFrame((): void => {
+    window.requestAnimationFrame((): void => {
+      window.requestAnimationFrame((): void => {
         this.contentArea.classList.remove("fade-in-forward", "fade-in-back");
         this.contentArea.classList.add("visible");
         this.isTransitioning = false;
@@ -490,7 +251,7 @@ export class PublishWizardView extends Modal {
 
   private waitTransition(ms: number): Promise<void> {
     return new Promise((resolve: () => void): void => {
-      setTimeout(resolve, ms);
+      window.setTimeout(resolve, ms);
     });
   }
 
@@ -560,11 +321,11 @@ export class PublishWizardView extends Modal {
     });
 
     this.previewFrame = previewArea.createEl("iframe", { cls: "wizard-preview-frame" });
-    this.previewFrame.style.width = "100%";
-    this.previewFrame.style.flex = "1";
-    this.previewFrame.style.border = "1px solid var(--background-modifier-border)";
-    this.previewFrame.style.borderRadius = "6px";
-    this.previewFrame.style.background = "#fff";
+    this.previewFrame.style.setProperty("width", "100%");
+    this.previewFrame.style.setProperty("flex", "1");
+    this.previewFrame.style.setProperty("border", "1px solid var(--background-modifier-border)");
+    this.previewFrame.style.setProperty("border-radius", "6px");
+    this.previewFrame.style.setProperty("background", "#fff");
 
     const backBtn: HTMLButtonElement = this.navButtons.createEl("button", { text: "← Back" });
     backBtn.addEventListener("click", (): void => {
@@ -584,19 +345,6 @@ export class PublishWizardView extends Modal {
 
   private writePreviewHtml(html: string): void {
     if (this.previewFrame === undefined) return;
-
-    try {
-      const doc = this.previewFrame.contentDocument;
-      if (doc) {
-        doc.open();
-        doc.write(html);
-        doc.close();
-        return;
-      }
-    } catch {
-      // contentDocument failed, fallback to srcdoc
-    }
-
     this.previewFrame.srcdoc = html;
   }
 
@@ -890,7 +638,7 @@ export class PublishWizardView extends Modal {
   }
 
   private showSuccess(result: PublishResult): void {
-    this.progressBar.style.display = "none";
+    this.progressBar.style.setProperty("display", "none");
     const progressTitle: HTMLElement | null = this.contentArea.querySelector(".wizard-publish-progress");
     if (progressTitle !== null) {
       progressTitle.textContent = "Published!";
@@ -898,7 +646,7 @@ export class PublishWizardView extends Modal {
     }
     this.stepText.setText("");
     this.resultSection.empty();
-    this.resultSection.style.display = "";
+    this.resultSection.style.removeProperty("display");
     this.resultSection.classList.add("wizard-publish-success");
 
     this.resultSection.createDiv({
@@ -931,7 +679,7 @@ export class PublishWizardView extends Modal {
   }
 
   private showError(result: PublishResult): void {
-    this.progressBar.style.display = "none";
+    this.progressBar.style.setProperty("display", "none");
     const progressTitle: HTMLElement | null = this.contentArea.querySelector(".wizard-publish-progress");
     if (progressTitle !== null) {
       progressTitle.textContent = "Publish failed";
@@ -939,7 +687,7 @@ export class PublishWizardView extends Modal {
     }
     this.stepText.setText("");
     this.resultSection.empty();
-    this.resultSection.style.display = "";
+    this.resultSection.style.removeProperty("display");
     this.resultSection.classList.add("wizard-publish-error");
 
     this.resultSection.createDiv({
@@ -953,7 +701,7 @@ export class PublishWizardView extends Modal {
     });
     retryBtn.addEventListener("click", async (): Promise<void> => {
       this.resultSection.empty();
-      this.progressBar.style.display = "";
+      this.progressBar.style.removeProperty("display");
       await this.doPublish();
     });
   }
@@ -980,17 +728,13 @@ export class PublishWizardView extends Modal {
   }
 
   private escapeHtml(text: string): string {
-    const div: HTMLDivElement = document.createElement("div");
-    div.appendChild(document.createTextNode(text));
+    const div: HTMLDivElement = doc.createElement("div");
+    div.appendChild(doc.createTextNode(text));
     return div.innerHTML;
   }
 
   private injectStyles(): void {
-    if (document.getElementById("wizard-transition-styles") !== null) return;
-    const style: HTMLStyleElement = document.createElement("style");
-    style.id = "wizard-transition-styles";
-    style.textContent = WIZARD_TRANSITION_STYLES;
-    document.head.appendChild(style);
+    // CSS is now in styles.css
   }
 }
 
@@ -1194,7 +938,7 @@ function buildNotePreviewHtml(content: string, css: string, siteTitle: string): 
 }
 
 function escapeHtmlPreview(text: string): string {
-  const div: HTMLDivElement = document.createElement("div");
-  div.appendChild(document.createTextNode(text));
+  const div: HTMLDivElement = doc.createElement("div");
+  div.appendChild(doc.createTextNode(text));
   return div.innerHTML;
 }

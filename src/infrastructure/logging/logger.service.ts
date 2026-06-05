@@ -1,10 +1,3 @@
-/**
- * This file is a logging service — calling console is its intended purpose.
- * eslint-disable no-console is legitimate here.
- */
-
-/* eslint-disable no-console */
-
 import { injectable } from "tsyringe";
 import type { LogLevel, LoggerPort } from "../../domain/ports/logger.port";
 

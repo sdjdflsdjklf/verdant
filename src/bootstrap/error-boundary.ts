@@ -1,6 +1,6 @@
 import type { LoggerPort } from "../domain/ports";
 
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
+// ErrorBoundary is a static utility class providing error handling wrappers — no instance needed
 export class ErrorBoundary {
 
   static async wrap<T>(

@@ -1,7 +1,6 @@
 import { injectable, singleton, inject } from "tsyringe";
 import { container } from "../di/container";
 import { DI_TOKENS } from "../di/tokens";
-import type { InjectionToken } from "tsyringe";
 import { HttpClient } from "../infrastructure/http/http.client";
 import { obsidianHttpInterceptor } from "./obsidian-http.interceptor";
 import { PluginDataStore } from "../infrastructure/storage/plugin-data.store";
@@ -57,7 +56,7 @@ export class PluginInitializer {
 
   private registerPersistence(): void {
     const publishStore: PluginDataStore = PluginDataStore.create("publish_cache");
-    container.register(DI_TOKENS.KeyValueStorePort as InjectionToken, { useValue: publishStore });
+    container.register(DI_TOKENS.KeyValueStorePort, { useValue: publishStore });
     this.logger.info("KeyValueStore (publish_cache) registered");
   }
 

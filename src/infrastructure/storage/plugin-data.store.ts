@@ -1,6 +1,8 @@
-import { injectable } from "tsyringe";
+import { injectable, inject } from "tsyringe";
 import { Plugin } from "obsidian";
 import type { KeyValueStorePort } from "../../domain/ports/key-value-store.port";
+import type { LoggerPort } from "../../domain/ports/logger.port";
+import { DI_TOKENS } from "../../di/tokens";
 
 @injectable()
 export class PluginDataStore implements KeyValueStorePort {
@@ -8,15 +10,22 @@ export class PluginDataStore implements KeyValueStorePort {
   private static sharedLoaded: boolean = false;
   private static sharedPlugin: Plugin | null = null;
   private static sharedLoadingPromise: Promise<void> | null = null;
+  private static logger: LoggerPort | null = null;
 
   private namespace: string | null = null;
+
+  constructor(
+    @inject(DI_TOKENS.LoggerService) logger: LoggerPort,
+  ) {
+    PluginDataStore.logger = logger;
+  }
 
   static setPlugin(plugin: Plugin): void {
     PluginDataStore.sharedPlugin = plugin;
   }
 
   static create(namespace: string): PluginDataStore {
-    const store: PluginDataStore = new PluginDataStore();
+    const store: PluginDataStore = new PluginDataStore({} as LoggerPort);
     store.namespace = namespace;
     return store;
   }
@@ -53,8 +62,7 @@ export class PluginDataStore implements KeyValueStorePort {
   set<T>(key: string, value: T): void {
     this.nsData()[key] = value;
     this.persist().catch((err: unknown): void => {
-      // eslint-disable-next-line no-console
-      console.error("[PluginDataStore] persist failed after set:", err);
+      this.logError("persist failed after set", err);
     });
   }
 
@@ -64,8 +72,7 @@ export class PluginDataStore implements KeyValueStorePort {
     Reflect.deleteProperty(ns, key);
     if (existed) {
       this.persist().catch((err: unknown): void => {
-        // eslint-disable-next-line no-console
-        console.error("[PluginDataStore] persist failed after delete:", err);
+        this.logError("persist failed after delete", err);
       });
     }
     return existed;
@@ -79,13 +86,11 @@ export class PluginDataStore implements KeyValueStorePort {
     if (this.namespace !== null) {
       PluginDataStore.sharedData[this.namespace] = {};
     } else {
-      // eslint-disable-next-line no-console
-      console.warn("[PluginDataStore] clear() called without namespace — clearing all shared data");
+      PluginDataStore.logger?.warn("[PluginDataStore] clear() called without namespace — clearing all shared data");
       PluginDataStore.sharedData = {};
     }
     this.persist().catch((err: unknown): void => {
-      // eslint-disable-next-line no-console
-      console.error("[PluginDataStore] persist failed after clear:", err);
+      this.logError("persist failed after clear", err);
     });
   }
 
@@ -109,5 +114,10 @@ export class PluginDataStore implements KeyValueStorePort {
     if (plugin !== null) {
       await plugin.saveData(PluginDataStore.sharedData);
     }
+  }
+
+  private logError(context: string, err: unknown): void {
+    const message = err instanceof Error ? err.message : String(err);
+    PluginDataStore.logger?.error(`[PluginDataStore] ${context}: ${message}`);
   }
 }

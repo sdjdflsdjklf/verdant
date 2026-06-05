@@ -16,7 +16,7 @@ export class PluginConfigService {
   private store: KeyValueStorePort | null = null;
   private listeners: ConfigChangeListener[] = [];
   private savePromise: Promise<void> = Promise.resolve();
-  private saveTimer?: ReturnType<typeof setTimeout>;
+  private saveTimer?: number;
   private pendingResolve?: () => void;
 
   constructor(
@@ -52,7 +52,7 @@ export class PluginConfigService {
       return;
     }
     if (this.saveTimer !== undefined) {
-      clearTimeout(this.saveTimer);
+      window.clearTimeout(this.saveTimer);
       this.saveTimer = undefined;
       this.pendingResolve?.();
       this.pendingResolve = undefined;
@@ -87,12 +87,12 @@ export class PluginConfigService {
       listener(key, value);
     }
     if (this.saveTimer !== undefined) {
-      clearTimeout(this.saveTimer);
+      window.clearTimeout(this.saveTimer);
       this.pendingResolve?.();
     }
     return new Promise<void>((resolve) => {
       this.pendingResolve = resolve;
-      this.saveTimer = setTimeout(() => {
+      this.saveTimer = window.setTimeout(() => {
         this.saveTimer = undefined;
         this.pendingResolve = undefined;
         void this.save().finally(() => resolve());
@@ -104,7 +104,7 @@ export class PluginConfigService {
   async update(partial: Partial<PluginSettings>): Promise<void> {
     Object.assign(this.settings, partial);
     if (this.saveTimer !== undefined) {
-      clearTimeout(this.saveTimer);
+      window.clearTimeout(this.saveTimer);
       this.saveTimer = undefined;
       this.pendingResolve?.();
       this.pendingResolve = undefined;

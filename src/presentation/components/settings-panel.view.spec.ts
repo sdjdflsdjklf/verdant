@@ -36,6 +36,9 @@ jest.mock("obsidian", (): object => ({
     setName(_n: string): this {
       return this;
     }
+    setHeading(): this {
+      return this;
+    }
     setDesc(_d: string): this {
       return this;
     }

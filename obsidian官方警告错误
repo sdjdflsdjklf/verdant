@@ -1,0 +1,55 @@
+## Source code
+
+- **Error**: Unexpected undescribed directive comment. Include descriptions to explain why the comment is necessary.
+  - src/bootstrap/error-boundary.ts:3, src/infrastructure/logging/logger.service.ts:6, src/infrastructure/storage/plugin-data.store.ts:56, src/infrastructure/storage/plugin-data.store.ts:67, src/infrastructure/storage/plugin-data.store.ts:82, src/infrastructure/storage/plugin-data.store.ts:87, src/shared/decorators/log.decorator.ts:6
+- **Error**: Disabling 'no-console' is not allowed.
+  - src/infrastructure/logging/logger.service.ts:6, src/infrastructure/storage/plugin-data.store.ts:56, src/infrastructure/storage/plugin-data.store.ts:67, src/infrastructure/storage/plugin-data.store.ts:82, src/infrastructure/storage/plugin-data.store.ts:87, src/shared/decorators/log.decorator.ts:6
+- **Error**: Requires 'eslint-enable' directive for 'no-console'.
+  - src/infrastructure/logging/logger.service.ts:6, src/shared/decorators/log.decorator.ts:6
+- **Error**: Sets styles directly instead of using CSS classes or `setCssProps`
+  - obsidianmd/no-static-styles-assignment
+  - src/infrastructure/obsidian/markdown.renderer.ts:21, src/presentation/components/publish-modal.view.ts:47, src/presentation/components/publish-modal.view.ts:60, src/presentation/components/publish-modal.view.ts:133, src/presentation/components/publish-modal.view.ts:134, src/presentation/components/publish-modal.view.ts:145, src/presentation/components/publish-modal.view.ts:146, src/presentation/components/publish-modal.view.ts:181, src/presentation/components/publish-modal.view.ts:182, src/presentation/components/publish-modal.view.ts:195, src/presentation/components/publish-wizard.view.ts:293, src/presentation/components/publish-wizard.view.ts:296, src/presentation/components/publish-wizard.view.ts:297, src/presentation/components/publish-wizard.view.ts:298, src/presentation/components/publish-wizard.view.ts:299, src/presentation/components/publish-wizard.view.ts:300, src/presentation/components/publish-wizard.view.ts:301, src/presentation/components/publish-wizard.view.ts:302, src/presentation/components/publish-wizard.view.ts:304, src/presentation/components/publish-wizard.view.ts:305, src/presentation/components/publish-wizard.view.ts:306, src/presentation/components/publish-wizard.view.ts:307, src/presentation/components/publish-wizard.view.ts:308, src/presentation/components/publish-wizard.view.ts:309, src/presentation/components/publish-wizard.view.ts:311, src/presentation/components/publish-wizard.view.ts:312, src/presentation/components/publish-wizard.view.ts:335, src/presentation/components/publish-wizard.view.ts:394, src/presentation/components/publish-wizard.view.ts:395, src/presentation/components/publish-wizard.view.ts:396, src/presentation/components/publish-wizard.view.ts:397, src/presentation/components/publish-wizard.view.ts:399, src/presentation/components/publish-wizard.view.ts:400, src/presentation/components/publish-wizard.view.ts:401, src/presentation/components/publish-wizard.view.ts:563, src/presentation/components/publish-wizard.view.ts:564, src/presentation/components/publish-wizard.view.ts:565, src/presentation/components/publish-wizard.view.ts:566, src/presentation/components/publish-wizard.view.ts:567, src/presentation/components/publish-wizard.view.ts:893, src/presentation/components/publish-wizard.view.ts:901, src/presentation/components/publish-wizard.view.ts:934, src/presentation/components/publish-wizard.view.ts:942, src/presentation/components/publish-wizard.view.ts:956
+- **Error**: Uses Obsidian APIs newer than the declared `minAppVersion`
+  - obsidianmd/no-unsupported-api
+  - src/infrastructure/obsidian/vault.repository.ts:21, src/infrastructure/obsidian/vault.repository.ts:29, src/infrastructure/obsidian/vault.repository.ts:37, src/infrastructure/obsidian/vault.repository.ts:45, src/presentation/view-controller.ts:40, src/presentation/view-controller.ts:50
+- **Error**: Don't detach leaves in onunload, as that will reset the leaf to it's default location when the plugin is loaded, even if the user has moved it to a different location.
+  - src/main.ts:74-77
+- **Error**: Creating and attaching "style" elements is not allowed. For loading CSS, use a "styles.css" file instead, which Obsidian loads for you.
+  - src/presentation/components/publish-wizard.view.ts:990
+- **Error**: For a consistent UI use `new Setting(containerEl).setName(...).setHeading()` instead of creating HTML heading elements directly.
+  - src/presentation/components/settings-panel.view.ts:28, src/presentation/components/settings-panel.view.ts:87, src/presentation/components/settings-panel.view.ts:104
+- **Warning**: "lint-staged" should be replaced with an alternative package.
+  - https://github.com/es-tooling/module-replacements/blob/main/docs/modules/lint-staged.md
+  - package.json:56
+- **Warning**: Avoid using 'globalThis'. Use 'window' or 'activeWindow' for popout window compatibility.
+  - src/bootstrap/obsidian-http.interceptor.ts:37
+- **Warning**: `NodeRequire` is deprecated. Use `NodeJS.Require` instead.
+  - src/bootstrap/obsidian-http.interceptor.ts:38, src/bootstrap/obsidian-http.interceptor.ts:38
+- **Warning**: Use 'window.setTimeout()' instead of 'setTimeout()' for popout window compatibility.
+  - src/bootstrap/obsidian-http.interceptor.ts:172, src/bootstrap/obsidian-http.interceptor.ts:257, src/config/plugin-config.service.ts:95, src/infrastructure/http/http.client.ts:102, src/infrastructure/http/http.interceptor.ts:29, src/infrastructure/http/http.interceptor.ts:99, src/infrastructure/http/http.interceptor.ts:102, src/presentation/components/publish-wizard.view.ts:493, src/shared/utils/async.utils.ts:53, src/shared/utils/async.utils.ts:83
+- **Warning**: This assertion is unnecessary since it does not change the type of the expression.
+  - src/bootstrap/obsidian-http.interceptor.ts:226, src/bootstrap/plugin-initializer.ts:60, src/main.ts:31
+- **Warning**: Use 'window.clearTimeout()' instead of 'clearTimeout()' for popout window compatibility.
+  - src/config/plugin-config.service.ts:55, src/config/plugin-config.service.ts:90, src/config/plugin-config.service.ts:107, src/infrastructure/http/http.client.ts:161, src/shared/utils/async.utils.ts:64
+- **Warning**: `CachePort` is deprecated. Use {@link KeyValueStorePort } with namespace "publish_cache" instead.
+  - src/domain/github/github-repo.service.ts:85, src/domain/ports/index.ts:2, src/infrastructure/cache/cache.repository.ts:12
+- **Warning**: `StoragePort` is deprecated. Use {@link KeyValueStorePort } instead.
+  - src/domain/ports/index.ts:3, src/infrastructure/storage/storage.repository.ts:12
+- **Warning**: Obsidian's configuration folder is not necessarily `.obsidian`, it can be configured by the user. Use `Vault#configDir` to get the current value
+  - src/domain/publisher/site-generator.service.ts:23
+- **Warning**: Unexpected use of 'fetch'. Use the built-in `requestUrl` function instead of `fetch` for network requests in Obsidian.
+  - src/infrastructure/http/http.client.ts:122
+- **Warning**: Use 'activeDocument' instead of 'document' for popout window compatibility.
+  - src/infrastructure/obsidian/markdown.renderer.ts:20, src/infrastructure/obsidian/markdown.renderer.ts:22, src/presentation/components/publish-wizard.view.ts:983, src/presentation/components/publish-wizard.view.ts:984, src/presentation/components/publish-wizard.view.ts:989, src/presentation/components/publish-wizard.view.ts:990, src/presentation/components/publish-wizard.view.ts:993, src/presentation/components/publish-wizard.view.ts:1197, src/presentation/components/publish-wizard.view.ts:1198
+- **Warning**: Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.
+  - src/presentation/components/note-selector.view.ts:300, src/presentation/components/note-selector.view.ts:334, src/presentation/components/note-selector.view.ts:341, src/presentation/components/publish-wizard.view.ts:331, src/presentation/view-controller.ts:40, src/presentation/view-controller.ts:50
+- **Warning**: Promise returned in function argument where a void return was expected.
+  - src/presentation/components/publish-modal.view.ts:42-44, src/presentation/components/publish-modal.view.ts:194-197, src/presentation/components/publish-wizard.view.ts:954-958
+- **Warning**: Use 'window.requestAnimationFrame()' instead of 'requestAnimationFrame()' for popout window compatibility.
+  - src/presentation/components/publish-wizard.view.ts:472, src/presentation/components/publish-wizard.view.ts:473, src/presentation/components/publish-wizard.view.ts:479, src/presentation/components/publish-wizard.view.ts:480
+- **Warning**: Do not write to DOM directly using document.write or document.writeln methods
+  - src/presentation/components/publish-wizard.view.ts:592
+- **Warning**: Unsafe assignment of an `any` value.
+  - src/shared/decorators/memoize.decorator.ts:64
+- **Warning**: Expected the Promise rejection reason to be an Error.
+  - src/shared/utils/async.utils.ts:131

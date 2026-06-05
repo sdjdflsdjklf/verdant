@@ -1,4 +1,5 @@
-import type { HttpClientPort, LoggerPort, CachePort } from "../ports";
+import type { HttpClientPort, LoggerPort } from "../ports";
+import type { CachePort } from "../ports/cache.port";
 import type { HttpResponse } from "../ports/http-client.port";
 import type {
   RepoInfo,

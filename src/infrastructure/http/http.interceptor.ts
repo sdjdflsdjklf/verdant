@@ -26,7 +26,7 @@ export function createRetryInterceptor(
         lastError = error;
         if (attempt < retries && check(error)) {
           const delay = baseDelayMs * 2 ** attempt;
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          await new Promise((resolve) => window.setTimeout(resolve, delay));
         } else {
           throw error;
         }
@@ -96,10 +96,10 @@ export function createRateLimitInterceptor(
       const oldest = timestamps[0];
       if (oldest === undefined) {
         // No timestamps and maxRequests <= 0: wait one window then allow
-        await new Promise((resolve) => setTimeout(resolve, windowMs));
+        await new Promise((resolve) => window.setTimeout(resolve, windowMs));
       } else {
         const waitMs = oldest + windowMs - now;
-        await new Promise((resolve) => setTimeout(resolve, waitMs));
+        await new Promise((resolve) => window.setTimeout(resolve, waitMs));
       }
       waited = true;
     }

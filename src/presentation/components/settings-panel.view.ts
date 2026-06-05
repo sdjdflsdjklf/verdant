@@ -25,7 +25,7 @@ export class SettingsPanelView extends PluginSettingTab {
   }
 
   private addGitHubSection(container: HTMLElement): void {
-    container.createEl("h2", { text: "GitHub" });
+    new Setting(container).setName("GitHub").setHeading();
 
     const settings: PluginSettings = this.configService.getAll();
 
@@ -84,7 +84,7 @@ export class SettingsPanelView extends PluginSettingTab {
   }
 
   private addUpgradeSection(container: HTMLElement): void {
-    container.createEl("h2", { text: "Upgrade to Pro" });
+    new Setting(container).setName("Upgrade to Pro").setHeading();
 
     container.createEl("p", {
       text: "Unlock unlimited notes and more features. Purchase on Payhip, then paste the license key in the Pro version to activate.",
@@ -101,7 +101,7 @@ export class SettingsPanelView extends PluginSettingTab {
   }
 
   private addSiteSection(container: HTMLElement): void {
-    container.createEl("h2", { text: "Site" });
+    new Setting(container).setName("Site").setHeading();
 
     const settings: PluginSettings = this.configService.getAll();
 

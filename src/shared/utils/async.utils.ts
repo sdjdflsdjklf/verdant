@@ -46,11 +46,11 @@ export async function timeout<T>(
   promise: Promise<T>,
   ms: number,
 ): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
+  let timer: number | undefined;
 
   const timeoutPromise = new Promise<never>(
     (_, reject): void => {
-      timer = setTimeout((): void => {
+      timer = window.setTimeout((): void => {
         reject(new TimeoutError(ms));
       }, ms);
     },
@@ -61,7 +61,7 @@ export async function timeout<T>(
     return result;
   } finally {
     if (timer !== undefined) {
-      clearTimeout(timer);
+      window.clearTimeout(timer);
     }
   }
 }
@@ -80,7 +80,7 @@ export class TimeoutError extends Error {
  * Promise-based sleep.
  */
 export async function sleep(ms: number): Promise<void> {
-  return await new Promise((resolve) => setTimeout(resolve, ms));
+  return await new Promise((resolve) => window.setTimeout(resolve, ms));
 }
 
 /**
@@ -128,7 +128,7 @@ export async function withAbort<T>(
       },
       (error: unknown): void => {
         signal.removeEventListener("abort", onAbort);
-        reject(error);
+        reject(error instanceof Error ? error : new Error(String(error)));
       },
     );
   });

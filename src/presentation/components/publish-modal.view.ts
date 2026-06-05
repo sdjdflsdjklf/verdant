@@ -39,12 +39,12 @@ export class PublishModalView extends Modal {
       text: "Publish",
       cls: "mod-cta",
     });
-    this.publishBtn.addEventListener("click", async (): Promise<void> => {
-      await this.doPublish();
+    this.publishBtn.addEventListener("click", (): void => {
+      void this.doPublish();
     });
 
     this.progressSection = contentEl.createDiv({ cls: "publish-progress" });
-    this.progressSection.style.display = "none";
+    this.progressSection.style.setProperty("display", "none");
 
     this.progressBar = this.progressSection.createEl("progress", {
       cls: "publish-progress-bar",
@@ -57,7 +57,7 @@ export class PublishModalView extends Modal {
     });
 
     this.resultSection = contentEl.createDiv({ cls: "publish-result" });
-    this.resultSection.style.display = "none";
+    this.resultSection.style.setProperty("display", "none");
   }
 
   private updateFileSummary(): void {
@@ -130,8 +130,8 @@ export class PublishModalView extends Modal {
   }
 
   private showProgress(): void {
-    this.progressSection.style.display = "";
-    this.resultSection.style.display = "none";
+    this.progressSection.style.removeProperty("display");
+    this.resultSection.style.setProperty("display", "none");
     this.progressBar.value = 0;
     this.stepText.setText("Starting...");
   }
@@ -142,8 +142,8 @@ export class PublishModalView extends Modal {
   }
 
   private showSuccess(result: PublishResult): void {
-    this.progressSection.style.display = "none";
-    this.resultSection.style.display = "";
+    this.progressSection.style.setProperty("display", "none");
+    this.resultSection.style.removeProperty("display");
     this.resultSection.empty();
 
     const successEl = this.resultSection.createDiv({
@@ -178,8 +178,8 @@ export class PublishModalView extends Modal {
   }
 
   private showError(result: PublishResult): void {
-    this.progressSection.style.display = "none";
-    this.resultSection.style.display = "";
+    this.progressSection.style.setProperty("display", "none");
+    this.resultSection.style.removeProperty("display");
     this.resultSection.empty();
 
     const errorEl = this.resultSection.createDiv({
@@ -191,9 +191,9 @@ export class PublishModalView extends Modal {
       text: "Retry",
       cls: "mod-cta",
     });
-    retryBtn.addEventListener("click", async (): Promise<void> => {
-      this.resultSection.style.display = "none";
-      await this.doPublish();
+    retryBtn.addEventListener("click", (): void => {
+      this.resultSection.style.setProperty("display", "none");
+      void this.doPublish();
     });
   }
 }

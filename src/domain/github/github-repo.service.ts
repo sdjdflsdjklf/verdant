@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
-import type { HttpClientPort, LoggerPort, CachePort } from "../ports";
+import type { HttpClientPort, LoggerPort } from "../ports";
+import type { CachePort } from "../ports/cache.port";
 import { DI_TOKENS } from "../../di/tokens";
 import type {
   RepoInfo,

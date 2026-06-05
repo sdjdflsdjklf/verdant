@@ -1,4 +1,5 @@
 import { injectable } from "tsyringe";
+import { requestUrl } from "obsidian";
 import type {
   HttpClientPort,
   HttpRequestConfig,
@@ -14,7 +15,7 @@ const DEFAULT_TIMEOUT_MS = 120_000;
 type NextHandler = (request: HttpRequestConfig) => Promise<HttpResponse>;
 
 /**
- * HTTP client using the global `fetch` API (available in Electron / Obsidian).
+ * HTTP client using Obsidian's `requestUrl` for network requests.
  * Supports an interceptor chain for cross-cutting concerns.
  */
 @injectable()
@@ -75,15 +76,15 @@ export class HttpClient implements HttpClientPort {
   // ── Private ────────────────────────────────────────────────────────
 
   /**
-   * Build a composed interceptor chain ending with the actual fetch call.
+   * Build a composed interceptor chain ending with the actual request call.
    * Interceptors are composed outside-in: last registered = outermost.
    */
   private buildChain(): NextHandler {
-    // Innermost call: the real fetch
+    // Innermost call: the real HTTP request via requestUrl
     const baseHandler: NextHandler = async (
       request: HttpRequestConfig,
     ): Promise<HttpResponse> => {
-      return await this.executeFetch(request);
+      return await this.executeRequest(request);
     };
 
     // Compose interceptors outside-in
@@ -96,94 +97,89 @@ export class HttpClient implements HttpClientPort {
       }, baseHandler);
   }
 
-  private async executeFetch(config: HttpRequestConfig): Promise<HttpResponse> {
-    const controller = new AbortController();
+  private async executeRequest(config: HttpRequestConfig): Promise<HttpResponse> {
+    const method: string = config.method ?? "GET";
     const timeoutMs = config.timeout ?? DEFAULT_TIMEOUT_MS;
-    const timeoutId = setTimeout((): void => controller.abort(), timeoutMs);
 
-    // Merge custom abort signal with timeout
-    const [signal, cleanupSignals] = config.signal
-      ? combineSignals(config.signal, controller.signal)
-      : [controller.signal, (): void => {}] as const;
+    const headers: Record<string, string> = {
+      Accept: "application/json",
+      ...config.headers,
+    };
 
-    try {
-      const headers: Record<string, string> = {
-        Accept: "application/json",
-        ...config.headers,
-      };
-
-      const body =
-        config.body !== undefined ? JSON.stringify(config.body) : undefined;
-
-      if (body !== undefined) {
-        headers["Content-Type"] = "application/json";
-      }
-
-      const response = await fetch(config.url, {
-        method: config.method,
-        headers,
-        body,
-        signal,
-      });
-
-      const responseHeaders: Record<string, string> = {};
-      response.headers.forEach((value: string, key: string): void => {
-        responseHeaders[key] = value;
-      });
-
-      let data: unknown;
-      const contentType = response.headers.get("content-type") ?? "";
-      if (contentType.includes("application/json")) {
-        data = (await response.json()) as unknown;
-      } else {
-        data = await response.text();
-      }
-
-      return {
-        status: response.status,
-        headers: responseHeaders,
-        data,
-      };
-    } catch (error: unknown) {
-      if (error instanceof DOMException && error.name === "AbortError") {
-        if (controller.signal.aborted) {
-          const timeoutErr: Error & { cause?: unknown } = new Error(
-            `Request to ${config.url} timed out after ${timeoutMs}ms. ` +
-            "Check your network connection or try again.",
-          );
-          timeoutErr.cause = error;
-          throw timeoutErr;
-        }
-        throw error;
-      }
-      throw error;
-    } finally {
-      clearTimeout(timeoutId);
-      cleanupSignals();
+    let body: string | ArrayBuffer | undefined;
+    if (config.body !== undefined) {
+      body = JSON.stringify(config.body);
+      headers["Content-Type"] = "application/json";
     }
+
+    const requestPromise: Promise<HttpResponse> = (async (): Promise<HttpResponse> => {
+      try {
+        const response = await requestUrl({
+          url: config.url,
+          method,
+          headers,
+          body,
+          contentType: headers["Content-Type"] ?? "application/json",
+        });
+
+        const responseHeaders: Record<string, string> = {};
+        if (response.headers) {
+          for (const [key, value] of Object.entries(response.headers)) {
+            responseHeaders[key] = String(value);
+          }
+        }
+
+        let data: unknown = response.json;
+        if (data === undefined || data === null) {
+          try {
+            data = JSON.parse(response.text);
+          } catch {
+            data = response.text;
+          }
+        }
+
+        return {
+          status: response.status,
+          headers: responseHeaders,
+          data,
+        };
+      } catch (error: unknown) {
+        const obsError = error as {
+          status?: number;
+          message?: string;
+          json?: unknown;
+          headers?: Record<string, string>;
+        };
+        let errorData: unknown;
+        if (obsError.json !== undefined && obsError.json !== null) {
+          errorData = obsError.json;
+        } else if (obsError.message !== undefined) {
+          try {
+            errorData = JSON.parse(obsError.message);
+          } catch {
+            errorData = { error: obsError.message };
+          }
+        } else {
+          errorData = { error: String(error) };
+        }
+        return {
+          status: obsError.status ?? 0,
+          headers: obsError.headers ?? {},
+          data: errorData,
+        };
+      }
+    })();
+
+    const timeoutPromise: Promise<HttpResponse> = new Promise<HttpResponse>((resolve): void => {
+      window.setTimeout((): void => {
+        resolve({
+          status: 0,
+          headers: {},
+          data: { error: `Request to ${config.url} timed out after ${timeoutMs}ms. Check your network connection or try again.` },
+        });
+      }, timeoutMs);
+    });
+
+    return await Promise.race([requestPromise, timeoutPromise]);
   }
-}
-
-/**
- * Combine two AbortSignals into one.
- * Returns the combined signal and a cleanup function to remove listeners.
- */
-function combineSignals(
-  s1: AbortSignal,
-  s2: AbortSignal,
-): [AbortSignal, () => void] {
-  const controller = new AbortController();
-
-  const onAbort1 = (): void => controller.abort();
-  const onAbort2 = (): void => controller.abort();
-
-  s1.addEventListener("abort", onAbort1, { once: true });
-  s2.addEventListener("abort", onAbort2, { once: true });
-
-  const cleanup = (): void => {
-    s1.removeEventListener("abort", onAbort1);
-    s2.removeEventListener("abort", onAbort2);
-  };
-
-  return [controller.signal, cleanup];
 }

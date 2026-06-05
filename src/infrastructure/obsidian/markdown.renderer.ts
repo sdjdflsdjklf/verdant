@@ -10,6 +10,9 @@ import { DI_TOKENS } from "../../di/tokens";
  * Markdown content to HTML, matching Obsidian's native rendering
  * (including WikiLinks, embeds, callouts, etc.).
  */
+/** Safe access to activeDocument with fallback to document for popout window compatibility. */
+const doc = (typeof activeDocument !== "undefined" ? activeDocument : document) as Document;
+
 @injectable()
 export class MarkdownRenderer implements MarkdownRendererPort {
   constructor(
@@ -17,9 +20,9 @@ export class MarkdownRenderer implements MarkdownRendererPort {
   ) {}
 
   public async render(content: string, sourcePath: string): Promise<string> {
-    const tempDiv: HTMLDivElement = document.createElement("div");
-    tempDiv.style.display = "none";
-    document.body.appendChild(tempDiv);
+    const tempDiv: HTMLDivElement = doc.createElement("div");
+    tempDiv.style.setProperty("display", "none");
+    doc.body.appendChild(tempDiv);
 
     const component: Component = new Component();
 

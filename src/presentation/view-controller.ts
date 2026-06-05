@@ -37,7 +37,7 @@ export class ViewController {
     const leaf: WorkspaceLeaf | undefined = existingLeaves[0];
 
     if (leaf !== undefined) {
-      workspace.revealLeaf(leaf);
+      void workspace.revealLeaf(leaf);
       return;
     }
 
@@ -47,7 +47,7 @@ export class ViewController {
         type: VIEW_TYPE_NOTE_SELECTOR,
         active: true,
       });
-      workspace.revealLeaf(newLeaf);
+      void workspace.revealLeaf(newLeaf);
     }
   }
 

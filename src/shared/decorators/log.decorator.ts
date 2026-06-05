@@ -1,11 +1,4 @@
 /**
- * This file is a logging decorator — calling console is its intended purpose.
- * eslint-disable no-console is legitimate here.
- */
-
-/* eslint-disable no-console */
-
-/**
  * Global toggle for the @Log() decorator.
  * Set `LogDecorator.enabled = false` to suppress all logging in production.
  */

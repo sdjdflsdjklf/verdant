@@ -20,7 +20,6 @@ const APP_OBSIDIAN_PREFIX = "app://obsidian.md/";
 
 const OBSIDIAN_INTERNAL_PREFIXES: string[] = [
   "resources/",
-  ".obsidian/",
   ".trash/",
 ];
 

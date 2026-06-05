@@ -1,4 +1,3 @@
-import { type InjectionToken } from "tsyringe";
 import { Plugin, Notice } from "obsidian";
 import "reflect-metadata";
 import { registerInfrastructure } from "./di/registrations";
@@ -28,7 +27,7 @@ export default class ObsidianGardenPlugin extends Plugin {
     await pluginStore.init();
 
     // Register Obsidian runtime objects for infrastructure services
-    container.register(DI_TOKENS.ObsidianApp as InjectionToken, { useValue: this.app });
+    container.register(DI_TOKENS.ObsidianApp, { useValue: this.app });
 
     // Create settings store and initialize config service through it
     const settingsStore: PluginDataStore = PluginDataStore.create("settings");
@@ -73,7 +72,6 @@ export default class ObsidianGardenPlugin extends Plugin {
 
   public onunload(): void {
     this.statusBar?.destroy();
-    this.app.workspace.detachLeavesOfType("garden-note-selector");
   }
 
   public async loadSettings(): Promise<void> {

@@ -297,7 +297,7 @@ export class NoteSelectorView extends ItemView {
       } else {
         this.selectedFiles.delete(node.path);
       }
-      this.saveSelectedFiles();
+      void this.saveSelectedFiles();
       this.notifySelectionChanged();
     });
 
@@ -331,14 +331,14 @@ export class NoteSelectorView extends ItemView {
     for (const file of filesToSelect) {
       this.selectedFiles.add(file.path);
     }
-    this.saveSelectedFiles();
+    void this.saveSelectedFiles();
     this.renderTree();
     this.notifySelectionChanged();
   }
 
   private clearSelection(): void {
     this.selectedFiles.clear();
-    this.saveSelectedFiles();
+    void this.saveSelectedFiles();
     this.renderTree();
     this.notifySelectionChanged();
   }
