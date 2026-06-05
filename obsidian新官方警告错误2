@@ -1,4 +1,0 @@
-## Source code
-
-- **Warning**: Use 'activeDocument' instead of 'document' for popout window compatibility.
-  - src/infrastructure/obsidian/markdown.renderer.ts:14, src/presentation/components/publish-wizard.view.ts:24
