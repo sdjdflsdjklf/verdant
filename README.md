@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="resources/icons/icon.png" alt="Obsidian Garden" width="128" height="128" />
+  <img src="resources/icons/icon.png" alt="OGarden" width="128" height="128" />
 </p>
 
-<h1 align="center">Obsidian Garden</h1>
+<h1 align="center">OGarden</h1>
 
 <p align="center">
   <a href="https://github.com/obsidian-garden/obsidian-garden/actions"><img src="https://img.shields.io/github/actions/workflow/status/obsidian-garden/obsidian-garden/ci.yml?branch=main&style=flat-square" alt="CI" /></a>
@@ -38,8 +38,8 @@
 
 ### Quick Start
 
-1. Install **Obsidian Garden** from the Obsidian Community Plugins browser
-2. Open Settings → Obsidian Garden
+1. Install **OGarden** from the Obsidian Community Plugins browser
+2. Open Settings → OGarden
 3. Enter your GitHub Personal Access Token (requires `repo` scope)
 4. Configure your repository name and publish branch (default: `gh-pages`)
 5. Click the globe icon in the ribbon or use the command palette to open the Note Selector
@@ -51,7 +51,7 @@ Your site will be live at `https://<username>.github.io/<repo>/` within minutes.
 
 | Note Selector | Publish Modal | Settings Panel |
 |---|---|---|
-| _Screenshot coming soon_ | _Screenshot coming soon_ | _Screenshot coming soon_ |
+| Select notes to publish via the sidebar picker | Review changes and publish with one click | Configure GitHub token, repo, and theme |
 
 ### Configuration
 
@@ -146,8 +146,8 @@ MIT — see [LICENSE](LICENSE)
 
 ### 快速开始
 
-1. 在 Obsidian 社区插件市场中安装 **Obsidian Garden**
-2. 打开设置 → Obsidian Garden
+1. 在 Obsidian 社区插件市场中安装 **OGarden**
+2. 打开设置 → OGarden
 3. 输入您的 GitHub Personal Access Token（需要 `repo` 权限）
 4. 配置仓库名称和发布分支（默认为 `gh-pages`）
 5. 点击侧边栏的地球图标或使用命令面板打开笔记选择器
