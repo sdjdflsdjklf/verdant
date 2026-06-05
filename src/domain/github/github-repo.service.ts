@@ -1,6 +1,5 @@
 import { injectable, inject } from "tsyringe";
-import type { HttpClientPort, LoggerPort } from "../ports";
-import type { CachePort } from "../ports/cache.port";
+import type { HttpClientPort, LoggerPort, KeyValueStorePort } from "../ports";
 import { DI_TOKENS } from "../../di/tokens";
 import type {
   RepoInfo,
@@ -12,6 +11,7 @@ import {
   GIT_FILE_MODE,
   GIT_BLOB_TYPE,
 } from "../../constants/github.constants";
+import type { PublishCache } from "../../types/cache.types";
 
 const BLOB_UPLOAD_CONCURRENCY = 5;
 
@@ -81,9 +81,10 @@ interface BaseTreeResult {
 
 @injectable()
 export class GithubRepoService {
+  private static readonly CACHE_KEY = "publish_cache";
   constructor(
     @inject(DI_TOKENS.HttpClient) private readonly httpClient: HttpClientPort,
-    @inject(DI_TOKENS.CacheRepository) private readonly cache: CachePort,
+    @inject(DI_TOKENS.KeyValueStorePort) private readonly store: KeyValueStorePort,
     @inject(DI_TOKENS.LoggerService) private readonly logger: LoggerPort,
   ) {}
 
@@ -107,7 +108,7 @@ export class GithubRepoService {
       if (getResponse.status === 200) {
         const data: GitHubRepoResponse = getResponse.data;
         const repoInfo: RepoInfo = this.toRepoInfo(data);
-        void this.updateCache(owner, repo, repoInfo.defaultBranch);
+        this.updateCache(owner, repo, repoInfo.defaultBranch);
         this.logger.info("Repo {owner}/{repo} exists", owner, repo);
         return repoInfo;
       }
@@ -129,7 +130,7 @@ export class GithubRepoService {
         if (createResponse.status === 201) {
           const created: GitHubRepoResponse = createResponse.data;
           const repoInfo: RepoInfo = this.toRepoInfo(created);
-          void this.updateCache(owner, repo, repoInfo.defaultBranch);
+          this.updateCache(owner, repo, repoInfo.defaultBranch);
           this.logger.info("Created repo {owner}/{repo}", owner, repo);
           return repoInfo;
         }
@@ -508,17 +509,17 @@ export class GithubRepoService {
     return commitResponse.data.sha;
   }
 
-  private async updateCache(
+  private updateCache(
     owner: string,
     repo: string,
     defaultBranch: string,
-  ): Promise<void> {
+  ): void {
     try {
-      const existing = await this.cache.read();
-      if (existing !== null) {
+      const existing: PublishCache | undefined = this.store.get<PublishCache>(GithubRepoService.CACHE_KEY);
+      if (existing !== undefined) {
         existing.siteConfig.repo = `${owner}/${repo}`;
         existing.siteConfig.branch = defaultBranch;
-        await this.cache.write(existing);
+        this.store.set(GithubRepoService.CACHE_KEY, existing);
       }
     } catch (error) {
       this.logger.warn("Failed to update publish cache: {error}", error);

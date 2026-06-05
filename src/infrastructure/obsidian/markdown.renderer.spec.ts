@@ -24,6 +24,15 @@ describe("MarkdownRenderer", (): void => {
     mockApp = {} as App;
     renderer = new MarkdownRenderer(mockApp);
 
+    // Polyfill Obsidian's setCssProps on jsdom elements
+    if (typeof HTMLElement.prototype.setCssProps !== "function") {
+      HTMLElement.prototype.setCssProps = function (props: Record<string, string>): void {
+        for (const [key, value] of Object.entries(props)) {
+          this.style.setProperty(key, value);
+        }
+      };
+    }
+
     // Reset and wire up the mock render function
     const obsidianRenderer = jest.requireMock("obsidian").MarkdownRenderer as {
       render: jest.Mock;

@@ -11,7 +11,7 @@ import { DI_TOKENS } from "../../di/tokens";
  * (including WikiLinks, embeds, callouts, etc.).
  */
 /** Safe access to activeDocument with fallback to document for popout window compatibility. */
-const doc = (typeof activeDocument !== "undefined" ? activeDocument : document) as Document;
+const doc = typeof activeDocument !== "undefined" ? activeDocument : document;
 
 @injectable()
 export class MarkdownRenderer implements MarkdownRendererPort {
@@ -21,7 +21,7 @@ export class MarkdownRenderer implements MarkdownRendererPort {
 
   public async render(content: string, sourcePath: string): Promise<string> {
     const tempDiv: HTMLDivElement = doc.createElement("div");
-    tempDiv.style.setProperty("display", "none");
+    tempDiv.setCssProps({ display: "none" });
     doc.body.appendChild(tempDiv);
 
     const component: Component = new Component();

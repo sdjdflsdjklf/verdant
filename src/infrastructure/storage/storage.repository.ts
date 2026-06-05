@@ -1,34 +1,42 @@
 import { injectable } from "tsyringe";
-import type { StoragePort } from "../../domain/ports/storage.port";
+import type { KeyValueStorePort } from "../../domain/ports/key-value-store.port";
 
 /**
- * In-memory storage repository.
+ * In-memory key-value store repository.
  *
  * For the MVP the storage lives in memory within the plugin session.
  * Obsidian's `Plugin.loadData()` / `saveData()` bridge will be added
  * when the plugin initializer is built (Phase 7).
  */
 @injectable()
-export class StorageRepository implements StoragePort {
-  private readonly store = new Map<string, string>();
+export class StorageRepository implements KeyValueStorePort {
+  private readonly store = new Map<string, unknown>();
 
-  public async get<T>(key: string): Promise<T | null> {
-    const raw = this.store.get(key);
-    if (raw === undefined) {
-      return null;
-    }
-    try {
-      return JSON.parse(raw) as T;
-    } catch {
-      return null;
-    }
+  public get<T>(key: string): T | undefined {
+    return this.store.get(key) as T | undefined;
   }
 
-  public async set<T>(key: string, value: T): Promise<void> {
-    this.store.set(key, JSON.stringify(value));
+  public set<T>(key: string, value: T): void {
+    this.store.set(key, value);
   }
 
-  public async delete(key: string): Promise<void> {
-    this.store.delete(key);
+  public delete(key: string): boolean {
+    return this.store.delete(key);
+  }
+
+  public has(key: string): boolean {
+    return this.store.has(key);
+  }
+
+  public clear(): void {
+    this.store.clear();
+  }
+
+  public getAll<T>(): Record<string, T> {
+    const result: Record<string, T> = {};
+    for (const [key, value] of this.store.entries()) {
+      result[key] = value as T;
+    }
+    return result;
   }
 }

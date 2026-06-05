@@ -21,7 +21,7 @@ import { ErrorBoundary } from "../../bootstrap/error-boundary";
 
 type WizardStep = "info" | "preview" | "publish";
 
-const doc = (typeof activeDocument !== "undefined" ? activeDocument : document) as Document;
+const doc = typeof activeDocument !== "undefined" ? activeDocument : document;
 
 export class PublishWizardView extends Modal {
   private currentStep: WizardStep = "info";
@@ -51,26 +51,12 @@ export class PublishWizardView extends Modal {
     const { contentEl, modalEl, titleEl, containerEl } = this;
 
     if (titleEl !== undefined) {
-      titleEl.style.setProperty("display", "none");
+      titleEl.addClass("wizard-modal-title-hidden");
     }
 
-    modalEl.style.setProperty("display", "flex", "important");
-    modalEl.style.setProperty("flex-direction", "column", "important");
-    modalEl.style.setProperty("padding", "0", "important");
-    modalEl.style.setProperty("width", "560px", "important");
-    modalEl.style.setProperty("max-width", "92vw", "important");
-    modalEl.style.setProperty("max-height", "85vh", "important");
-    modalEl.style.setProperty("height", "", "important");
-
-    contentEl.style.setProperty("flex", "1", "important");
-    contentEl.style.setProperty("min-height", "0", "important");
-    contentEl.style.setProperty("overflow", "hidden", "important");
-    contentEl.style.setProperty("display", "flex", "important");
-    contentEl.style.setProperty("flex-direction", "column", "important");
-    contentEl.style.setProperty("padding", "0", "important");
-
-    containerEl.style.removeProperty("width");
-    containerEl.style.removeProperty("max-width");
+    modalEl.addClass("wizard-modal-flex");
+    contentEl.addClass("wizard-content-flex");
+    containerEl.setCssProps({ width: "", maxWidth: "" });
 
     contentEl.empty();
     contentEl.addClass("obsidian-garden-publish-wizard");
@@ -89,11 +75,11 @@ export class PublishWizardView extends Modal {
     this.resizeObserver.observe(contentEl);
 
     this.renderStepIndicator();
-    this.showStep("info");
+    void this.showStep("info");
 
     const bg: HTMLElement | null = this.modalEl.parentElement?.querySelector(".modal-bg") ?? null;
     if (bg !== null) {
-      bg.style.setProperty("pointer-events", "none");
+      bg.addClass("wizard-bg-no-pointer");
     }
   }
 
@@ -151,16 +137,11 @@ export class PublishWizardView extends Modal {
 
   private applyModalSize(mode: "compact" | "expanded"): void {
     const { modalEl } = this;
+    modalEl.removeClass("wizard-modal-flex", "wizard-modal-expanded", "wizard-modal-compact");
     if (mode === "expanded") {
-      modalEl.style.setProperty("width", "92vw", "important");
-      modalEl.style.setProperty("max-width", "1100px", "important");
-      modalEl.style.setProperty("height", "82vh", "important");
-      modalEl.style.setProperty("max-height", "none", "important");
+      modalEl.addClass("wizard-modal-expanded");
     } else {
-      modalEl.style.setProperty("width", "560px", "important");
-      modalEl.style.setProperty("max-width", "92vw", "important");
-      modalEl.style.setProperty("max-height", "85vh", "important");
-      modalEl.style.removeProperty("height");
+      modalEl.addClass("wizard-modal-compact");
     }
   }
 
@@ -169,7 +150,7 @@ export class PublishWizardView extends Modal {
     if (this.currentStep === "preview") return;
 
     const total: number = (stepIndicator.clientHeight || 0) + (contentArea.scrollHeight || 0) + (navButtons.clientHeight || 0);
-    modalEl.style.setProperty("height", `${total}px`, "important");
+    modalEl.setCssProps({ height: `${total}px` });
   }
 
   private reflowLayout(containerHeight: number): void {
@@ -179,11 +160,11 @@ export class PublishWizardView extends Modal {
     const footerH: number = this.navButtons?.offsetHeight ?? 0;
     const available: number = Math.max(0, containerHeight - headerH - footerH);
 
-    this.contentArea.style.setProperty("height", `${available}px`);
+    this.contentArea.setCssProps({ height: `${available}px` });
     if (this.previewLayout !== null) {
-      this.previewLayout.style.setProperty("height", `${available}px`);
+      this.previewLayout.setCssProps({ height: `${available}px` });
       if (this.previewFrame !== undefined) {
-        this.previewFrame.style.setProperty("height", `${Math.max(0, available - 48)}px`);
+        this.previewFrame.setCssProps({ height: `${Math.max(0, available - 48)}px` });
       }
     }
   }
@@ -208,8 +189,7 @@ export class PublishWizardView extends Modal {
     this.currentStep = step;
     this.renderStepIndicator();
     this.contentArea.empty();
-    this.contentArea.style.removeProperty("height");
-    this.contentArea.style.removeProperty("width");
+    this.contentArea.setCssProps({});
     this.navButtons.empty();
 
     this.contentArea.classList.remove("fade-out-forward", "fade-out-back");
@@ -320,12 +300,7 @@ export class PublishWizardView extends Modal {
       void this.generateAndShowFullPreview(fullPreviewBtn);
     });
 
-    this.previewFrame = previewArea.createEl("iframe", { cls: "wizard-preview-frame" });
-    this.previewFrame.style.setProperty("width", "100%");
-    this.previewFrame.style.setProperty("flex", "1");
-    this.previewFrame.style.setProperty("border", "1px solid var(--background-modifier-border)");
-    this.previewFrame.style.setProperty("border-radius", "6px");
-    this.previewFrame.style.setProperty("background", "#fff");
+    this.previewFrame = previewArea.createEl("iframe", { cls: "wizard-preview-frame-styles" });
 
     const backBtn: HTMLButtonElement = this.navButtons.createEl("button", { text: "← Back" });
     backBtn.addEventListener("click", (): void => {
@@ -638,7 +613,7 @@ export class PublishWizardView extends Modal {
   }
 
   private showSuccess(result: PublishResult): void {
-    this.progressBar.style.setProperty("display", "none");
+    this.progressBar.addClass("wizard-hidden");
     const progressTitle: HTMLElement | null = this.contentArea.querySelector(".wizard-publish-progress");
     if (progressTitle !== null) {
       progressTitle.textContent = "Published!";
@@ -646,7 +621,7 @@ export class PublishWizardView extends Modal {
     }
     this.stepText.setText("");
     this.resultSection.empty();
-    this.resultSection.style.removeProperty("display");
+    this.resultSection.removeClass("wizard-hidden");
     this.resultSection.classList.add("wizard-publish-success");
 
     this.resultSection.createDiv({
@@ -679,7 +654,7 @@ export class PublishWizardView extends Modal {
   }
 
   private showError(result: PublishResult): void {
-    this.progressBar.style.setProperty("display", "none");
+    this.progressBar.addClass("wizard-hidden");
     const progressTitle: HTMLElement | null = this.contentArea.querySelector(".wizard-publish-progress");
     if (progressTitle !== null) {
       progressTitle.textContent = "Publish failed";
@@ -687,7 +662,7 @@ export class PublishWizardView extends Modal {
     }
     this.stepText.setText("");
     this.resultSection.empty();
-    this.resultSection.style.removeProperty("display");
+    this.resultSection.removeClass("wizard-hidden");
     this.resultSection.classList.add("wizard-publish-error");
 
     this.resultSection.createDiv({
@@ -699,10 +674,10 @@ export class PublishWizardView extends Modal {
       text: "Retry",
       cls: "mod-cta",
     });
-    retryBtn.addEventListener("click", async (): Promise<void> => {
+    retryBtn.addEventListener("click", (): void => {
       this.resultSection.empty();
-      this.progressBar.style.removeProperty("display");
-      await this.doPublish();
+      this.progressBar.removeClass("wizard-hidden");
+      void this.doPublish();
     });
   }
 

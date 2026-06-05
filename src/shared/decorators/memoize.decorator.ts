@@ -61,7 +61,8 @@ export function Memoize(optionsOrTtlMs: number | MemoizeOptions = DEFAULT_TTL_MS
       cache.set(key, { result, timestamp: Date.now() });
 
       while (cache.size > maxEntries) {
-        const oldestKey: string | undefined = cache.keys().next().value;
+        // IteratorResult.value is typed as `any`; narrow with explicit cast
+        const oldestKey: string | undefined = cache.keys().next().value as string | undefined;
         if (oldestKey !== undefined) {
           cache.delete(oldestKey);
         } else {

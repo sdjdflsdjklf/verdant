@@ -1,4 +1,3 @@
-import type { PublishCache } from "../../types/cache.types";
 import { CacheRepository } from "./cache.repository";
 
 describe("CacheRepository", (): void => {
@@ -8,47 +7,55 @@ describe("CacheRepository", (): void => {
     repo = new CacheRepository();
   });
 
-  const sampleCache: PublishCache = {
-    version: 1,
-    lastPublished: "2026-05-18T10:00:00Z",
-    files: {
-      "notes/page.md": {
-        hash: "abc123",
-        size: 1024,
-        lastModified: 1716000000000,
-      },
-    },
-    siteConfig: {
-      repo: "my-obsidian-garden",
-      branch: "gh-pages",
-    },
-  };
-
-  it("should return null when empty", async (): Promise<void> => {
-    const result = await repo.read();
-    expect(result).toBeNull();
+  it("should return undefined for missing keys", (): void => {
+    const result: string | undefined = repo.get("nonexistent");
+    expect(result).toBeUndefined();
   });
 
-  it("should write and read a cache entry", async (): Promise<void> => {
-    await repo.write(sampleCache);
-
-    const result = await repo.read();
-    expect(result).toEqual(sampleCache);
+  it("should store and retrieve values", (): void => {
+    repo.set("key1", "hello");
+    const value: string | undefined = repo.get<string>("key1");
+    expect(value).toBe("hello");
   });
 
-  it("should overwrite an existing cache", async (): Promise<void> => {
-    const updated: PublishCache = { ...sampleCache, version: 2 };
-    await repo.write(updated);
-
-    const result = await repo.read();
-    expect(result?.version).toBe(2);
+  it("should store complex objects", (): void => {
+    const obj = { a: 1, b: [2, 3] };
+    repo.set("obj", obj);
+    const value: typeof obj | undefined = repo.get<typeof obj>("obj");
+    expect(value).toEqual(obj);
   });
 
-  it("should clear the cache", async (): Promise<void> => {
-    await repo.write(sampleCache);
-    await repo.clear();
+  it("should delete values", (): void => {
+    repo.set("temp", "value");
+    const deleted: boolean = repo.delete("temp");
+    expect(deleted).toBe(true);
+    expect(repo.get("temp")).toBeUndefined();
+  });
 
-    const result = await repo.read();
-    expect(result).toBeNull();
+  it("should check has", (): void => {
+    repo.set("exists", true);
+    expect(repo.has("exists")).toBe(true);
+    expect(repo.has("missing")).toBe(false);
+  });
+
+  it("should clear all values", (): void => {
+    repo.set("a", 1);
+    repo.set("b", 2);
+    repo.clear();
+    expect(repo.get("a")).toBeUndefined();
+    expect(repo.get("b")).toBeUndefined();
+  });
+
+  it("should get all values", (): void => {
+    repo.set("a", 1);
+    repo.set("b", 2);
+    const all: Record<string, number> = repo.getAll<number>();
+    expect(all).toEqual({ a: 1, b: 2 });
+  });
+
+  it("should overwrite existing keys", (): void => {
+    repo.set("key", "old");
+    repo.set("key", "new");
+    expect(repo.get<string>("key")).toBe("new");
   });
 });

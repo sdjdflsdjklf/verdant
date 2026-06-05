@@ -1,5 +1,4 @@
-import type { HttpClientPort, LoggerPort } from "../ports";
-import type { CachePort } from "../ports/cache.port";
+import type { HttpClientPort, LoggerPort, KeyValueStorePort } from "../ports";
 import type { HttpResponse } from "../ports/http-client.port";
 import type {
   RepoInfo,
@@ -8,6 +7,7 @@ import type {
 } from "../../types/github.types";
 import { GITHUB_API_BASE, GIT_FILE_MODE, GIT_BLOB_TYPE } from "../../constants/github.constants";
 import { GithubRepoService } from "./github-repo.service";
+import type { PublishCache } from "../../types/cache.types";
 
 function createHttpMock(): jest.Mocked<HttpClientPort> {
   return {
@@ -29,11 +29,14 @@ function createLoggerMock(): jest.Mocked<LoggerPort> {
   };
 }
 
-function createCacheMock(): jest.Mocked<CachePort> {
+function createStoreMock(): jest.Mocked<KeyValueStorePort> {
   return {
-    read: jest.fn(),
-    write: jest.fn(),
+    get: jest.fn(),
+    set: jest.fn(),
+    delete: jest.fn(),
+    has: jest.fn(),
     clear: jest.fn(),
+    getAll: jest.fn(),
   };
 }
 
@@ -44,16 +47,16 @@ const BRANCH = "main";
 describe("GithubRepoService", (): void => {
   let http: jest.Mocked<HttpClientPort>;
   let logger: jest.Mocked<LoggerPort>;
-  let cache: jest.Mocked<CachePort>;
+  let store: jest.Mocked<KeyValueStorePort>;
   let service: GithubRepoService;
 
   beforeEach((): void => {
     jest.restoreAllMocks();
     http = createHttpMock();
     logger = createLoggerMock();
-    cache = createCacheMock();
-    cache.read.mockResolvedValue(null);
-    service = new GithubRepoService(http, cache, logger);
+    store = createStoreMock();
+    store.get.mockReturnValue(undefined);
+    service = new GithubRepoService(http, store, logger);
   });
 
   describe("ensureRepoExists", (): void => {
@@ -166,12 +169,13 @@ describe("GithubRepoService", (): void => {
     });
 
     it("should update cache when repo exists or is created", async (): Promise<void> => {
-      cache.read.mockResolvedValue({
+      const sampleCache: PublishCache = {
         version: 1,
         lastPublished: "",
         files: {},
         siteConfig: { repo: "", branch: "" },
-      });
+      };
+      store.get.mockReturnValue(sampleCache);
 
       http.get.mockResolvedValue({
         status: 200,
@@ -187,7 +191,8 @@ describe("GithubRepoService", (): void => {
 
       await service.ensureRepoExists(TOKEN, OWNER, REPO);
 
-      expect(cache.write).toHaveBeenCalledWith(
+      expect(store.set).toHaveBeenCalledWith(
+        "publish_cache",
         expect.objectContaining({
           siteConfig: { repo: `${OWNER}/${REPO}`, branch: "main" },
         }),
@@ -195,12 +200,13 @@ describe("GithubRepoService", (): void => {
     });
 
     it("should handle cache write failures gracefully", async (): Promise<void> => {
-      cache.read.mockResolvedValue({
+      const sampleCache: PublishCache = {
         version: 1,
         lastPublished: "",
         files: {},
         siteConfig: { repo: "", branch: "" },
-      });
+      };
+      store.get.mockReturnValue(sampleCache);
 
       http.get.mockResolvedValue({
         status: 200,
@@ -214,7 +220,9 @@ describe("GithubRepoService", (): void => {
         },
       } as HttpResponse<Record<string, unknown>>);
 
-      cache.write.mockRejectedValue(new Error("Cache write error"));
+      store.set.mockImplementation((): void => {
+        throw new Error("Cache write error");
+      });
 
       const result: RepoInfo = await service.ensureRepoExists(
         TOKEN,

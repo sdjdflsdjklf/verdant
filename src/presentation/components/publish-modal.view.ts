@@ -43,8 +43,7 @@ export class PublishModalView extends Modal {
       void this.doPublish();
     });
 
-    this.progressSection = contentEl.createDiv({ cls: "publish-progress" });
-    this.progressSection.style.setProperty("display", "none");
+    this.progressSection = contentEl.createDiv({ cls: "publish-progress publish-progress-hidden" });
 
     this.progressBar = this.progressSection.createEl("progress", {
       cls: "publish-progress-bar",
@@ -56,8 +55,7 @@ export class PublishModalView extends Modal {
       cls: "setting-item-description",
     });
 
-    this.resultSection = contentEl.createDiv({ cls: "publish-result" });
-    this.resultSection.style.setProperty("display", "none");
+    this.resultSection = contentEl.createDiv({ cls: "publish-result publish-result-hidden" });
   }
 
   private updateFileSummary(): void {
@@ -130,8 +128,8 @@ export class PublishModalView extends Modal {
   }
 
   private showProgress(): void {
-    this.progressSection.style.removeProperty("display");
-    this.resultSection.style.setProperty("display", "none");
+    this.progressSection.removeClass("publish-progress-hidden");
+    this.resultSection.addClass("publish-result-hidden");
     this.progressBar.value = 0;
     this.stepText.setText("Starting...");
   }
@@ -142,8 +140,8 @@ export class PublishModalView extends Modal {
   }
 
   private showSuccess(result: PublishResult): void {
-    this.progressSection.style.setProperty("display", "none");
-    this.resultSection.style.removeProperty("display");
+    this.progressSection.addClass("publish-progress-hidden");
+    this.resultSection.removeClass("publish-result-hidden");
     this.resultSection.empty();
 
     const successEl = this.resultSection.createDiv({
@@ -178,8 +176,8 @@ export class PublishModalView extends Modal {
   }
 
   private showError(result: PublishResult): void {
-    this.progressSection.style.setProperty("display", "none");
-    this.resultSection.style.removeProperty("display");
+    this.progressSection.addClass("publish-progress-hidden");
+    this.resultSection.removeClass("publish-result-hidden");
     this.resultSection.empty();
 
     const errorEl = this.resultSection.createDiv({
@@ -192,7 +190,7 @@ export class PublishModalView extends Modal {
       cls: "mod-cta",
     });
     retryBtn.addEventListener("click", (): void => {
-      this.resultSection.style.setProperty("display", "none");
+      this.resultSection.addClass("publish-result-hidden");
       void this.doPublish();
     });
   }
