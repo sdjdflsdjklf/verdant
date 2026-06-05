@@ -21,7 +21,10 @@ import { ErrorBoundary } from "../../bootstrap/error-boundary";
 
 type WizardStep = "info" | "preview" | "publish";
 
-const doc = typeof activeDocument !== "undefined" ? activeDocument : document;
+/** Use activeDocument for popout window compatibility. Lazily resolved to support test environments. */
+function getDoc(): Document {
+  return typeof activeDocument !== "undefined" ? activeDocument : document;
+}
 
 export class PublishWizardView extends Modal {
   private currentStep: WizardStep = "info";
@@ -703,8 +706,8 @@ export class PublishWizardView extends Modal {
   }
 
   private escapeHtml(text: string): string {
-    const div: HTMLDivElement = doc.createElement("div");
-    div.appendChild(doc.createTextNode(text));
+    const div: HTMLDivElement = getDoc().createElement("div");
+    div.appendChild(getDoc().createTextNode(text));
     return div.innerHTML;
   }
 
@@ -913,7 +916,7 @@ function buildNotePreviewHtml(content: string, css: string, siteTitle: string): 
 }
 
 function escapeHtmlPreview(text: string): string {
-  const div: HTMLDivElement = doc.createElement("div");
-  div.appendChild(doc.createTextNode(text));
+  const div: HTMLDivElement = getDoc().createElement("div");
+  div.appendChild(getDoc().createTextNode(text));
   return div.innerHTML;
 }

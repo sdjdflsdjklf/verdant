@@ -5,6 +5,9 @@
 import { MarkdownRenderer } from "./markdown.renderer";
 import type { App } from "obsidian";
 
+// Provide activeDocument for popout window compatibility (Obsidian global)
+(globalThis as Record<string, unknown>).activeDocument = document;
+
 // Mock must use inline jest.fn() — variables can't be referenced before hoisting
 jest.mock("obsidian", (): object => ({
   MarkdownRenderer: {
