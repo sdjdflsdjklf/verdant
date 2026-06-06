@@ -1,7 +1,7 @@
 /** Plugin metadata */
 export const PLUGIN_ID = "obsidian-garden";
 export const PLUGIN_NAME = "Obsidian Garden";
-export const PLUGIN_VERSION = "1.0.0";
+export const PLUGIN_VERSION = "1.0.2";
 export const MIN_OBSIDIAN_VERSION = "1.5.0";
 
 /** Deployment defaults */

@@ -1,7 +1,7 @@
 {
     "id": "ogarden",
     "name": "OGarden",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "minAppVersion": "1.7.2",
     "description": "One-click publish your notes as a beautiful website.",
     "author": "Garden",
