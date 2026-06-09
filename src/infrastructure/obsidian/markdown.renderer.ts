@@ -10,9 +10,9 @@ import { DI_TOKENS } from "../../di/tokens";
  * Markdown content to HTML, matching Obsidian's native rendering
  * (including WikiLinks, embeds, callouts, etc.).
  */
-/** Use activeDocument for popout window compatibility. Lazily resolved to support test environments. */
+/** Use activeDocument for popout window compatibility. */
 function getDoc(): Document {
-  return typeof activeDocument !== "undefined" ? activeDocument : document;
+  return activeDocument;
 }
 
 @injectable()

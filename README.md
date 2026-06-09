@@ -2,7 +2,7 @@
   <img src="resources/icons/icon.png" alt="OGarden" width="128" height="128" />
 </p>
 
-<h1 align="center">OGarden</h1>
+# OGarden
 
 <p align="center">
   <a href="https://github.com/obsidian-garden/obsidian-garden/actions"><img src="https://img.shields.io/github/actions/workflow/status/obsidian-garden/obsidian-garden/ci.yml?branch=main&style=flat-square" alt="CI" /></a>

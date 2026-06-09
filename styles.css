@@ -349,14 +349,14 @@
 
 /* ── Wizard Transition Styles ── */
 
-.modal:has(.obsidian-garden-publish-wizard) {
+.modal.wizard-modal-flex {
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1), max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 16px !important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.modal:has(.obsidian-garden-publish-wizard) .modal-title {
-  display: none !important;
+.modal.wizard-modal-flex .modal-title {
+  display: none;
 }
 
 .obsidian-garden-publish-wizard {
@@ -569,33 +569,38 @@
 
 /* ── Wizard Modal Layout ── */
 
-.wizard-modal-title-hidden {
-  display: none !important;
+.modal-title.wizard-modal-title-hidden {
+  display: none;
 }
 
-.wizard-modal-flex {
+/* Base layout — always present when wizard is open */
+.modal.wizard-modal-flex {
   display: flex !important;
   flex-direction: column !important;
   padding: 0 !important;
   width: 560px !important;
   max-width: 92vw !important;
-  max-height: 85vh !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
 }
 
-.wizard-modal-expanded {
+/* Expanded mode — Preview step: full viewport height */
+.modal.wizard-modal-flex.wizard-modal-expanded {
   width: 92vw !important;
   max-width: 1100px !important;
   height: 82vh !important;
   max-height: none !important;
 }
 
-.wizard-modal-compact {
+/* Compact mode — Info/Publish steps */
+.modal.wizard-modal-flex.wizard-modal-compact {
   width: 560px !important;
   max-width: 92vw !important;
   max-height: 85vh !important;
 }
 
-.wizard-content-flex {
+/* Content area fill remaining space */
+.modal .wizard-content-flex {
   flex: 1 !important;
   min-height: 0 !important;
   overflow: hidden !important;
@@ -608,8 +613,8 @@
   pointer-events: none;
 }
 
-.wizard-hidden {
-  display: none !important;
+.obsidian-garden-publish-wizard .wizard-hidden {
+  display: none;
 }
 
 .wizard-preview-frame-styles {
@@ -622,10 +627,10 @@
 
 /* ── Publish Modal ── */
 
-.publish-progress-hidden {
-  display: none !important;
+.obsidian-garden-publish-modal .publish-progress-hidden {
+  display: none;
 }
 
-.publish-result-hidden {
-  display: none !important;
+.obsidian-garden-publish-modal .publish-result-hidden {
+  display: none;
 }

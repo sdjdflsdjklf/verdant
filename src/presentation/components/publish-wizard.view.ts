@@ -21,9 +21,9 @@ import { ErrorBoundary } from "../../bootstrap/error-boundary";
 
 type WizardStep = "info" | "preview" | "publish";
 
-/** Use activeDocument for popout window compatibility. Lazily resolved to support test environments. */
+/** Use activeDocument for popout window compatibility. */
 function getDoc(): Document {
-  return typeof activeDocument !== "undefined" ? activeDocument : document;
+  return activeDocument;
 }
 
 export class PublishWizardView extends Modal {
@@ -140,7 +140,8 @@ export class PublishWizardView extends Modal {
 
   private applyModalSize(mode: "compact" | "expanded"): void {
     const { modalEl } = this;
-    modalEl.removeClass("wizard-modal-flex", "wizard-modal-expanded", "wizard-modal-compact");
+    modalEl.removeClass("wizard-modal-expanded", "wizard-modal-compact");
+    modalEl.addClass("wizard-modal-flex");
     if (mode === "expanded") {
       modalEl.addClass("wizard-modal-expanded");
     } else {
