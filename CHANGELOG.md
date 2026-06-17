@@ -111,4 +111,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No external servers, no telemetry, no data collection
 - No files left behind after plugin disable
 
-[v1.0.0]: https://github.com/verdant-pub/verdant/releases/tag/v1.0.0
+[v1.0.0]: https://github.com/sdjdflsdjklf/verdant/releases/tag/v1.0.0

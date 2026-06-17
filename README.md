@@ -5,10 +5,10 @@
 # Verdant
 
 <p align="center">
-  <a href="https://github.com/verdant-pub/verdant/actions"><img src="https://img.shields.io/github/actions/workflow/status/verdant-pub/verdant/ci.yml?branch=main&style=flat-square" alt="CI" /></a>
-  <a href="https://www.npmjs.com/package/verdant"><img src="https://img.shields.io/github/package-json/v/verdant-pub/verdant?style=flat-square" alt="Version" /></a>
+  <a href="https://github.com/sdjdflsdjklf/verdant/actions"><img src="https://img.shields.io/github/actions/workflow/status/sdjdflsdjklf/verdant/ci.yml?branch=main&style=flat-square" alt="CI" /></a>
+  <a href="https://www.npmjs.com/package/verdant"><img src="https://img.shields.io/github/package-json/v/sdjdflsdjklf/verdant?style=flat-square" alt="Version" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License" /></a>
-  <a href="https://coveralls.io/github/verdant-pub/verdant"><img src="https://img.shields.io/coverallsCoverage/github/verdant-pub/verdant?style=flat-square" alt="Coverage" /></a>
+  <a href="https://coveralls.io/github/sdjdflsdjklf/verdant"><img src="https://img.shields.io/coverallsCoverage/github/sdjdflsdjklf/verdant?style=flat-square" alt="Coverage" /></a>
   <a href="https://obsidian.md/plugins"><img src="https://img.shields.io/badge/Obsidian-Plugin-8A2BE2?style=flat-square" alt="Obsidian Plugin" /></a>
 </p>
 
@@ -75,7 +75,7 @@ Enter your Pro license key in the settings panel to unlock unlimited notes. Lice
 
 ```bash
 # Clone and install
-git clone https://github.com/verdant-pub/verdant.git
+git clone https://github.com/sdjdflsdjklf/verdant.git
 cd verdant
 npm install
 
@@ -177,7 +177,7 @@ MIT — see [LICENSE](LICENSE)
 
 ```bash
 # 克隆并安装依赖
-git clone https://github.com/verdant-pub/verdant.git
+git clone https://github.com/sdjdflsdjklf/verdant.git
 cd verdant
 npm install
 
