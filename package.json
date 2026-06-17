@@ -1,5 +1,5 @@
 {
-  "name": "garden-publish",
+  "name": "verdant",
   "version": "1.0.2",
   "description": "One-click publish Obsidian notes as a website",
   "main": "main.js",
@@ -20,6 +20,7 @@
     "plugin",
     "publish",
     "blog",
+    "verdant",
     "digital-garden"
   ],
   "author": "",

@@ -67,7 +67,7 @@ describe("NoteSelectorView", (): void => {
 
   describe("constants", (): void => {
     it("should have correct view type", (): void => {
-      expect(VIEW_TYPE_NOTE_SELECTOR).toBe("obsidian-garden-note-selector");
+      expect(VIEW_TYPE_NOTE_SELECTOR).toBe("verdant-note-selector");
     });
 
     it("should return correct view type", (): void => {

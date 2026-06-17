@@ -35,7 +35,7 @@ export class PluginInitializer {
 
   async initialize(_plugin: PluginHost, _settings: PluginSettings): Promise<void> {
     try {
-      this.logger.info("Initializing Garden...");
+      this.logger.info("Initializing Verdant...");
 
       this.registerPersistence();
 
@@ -50,7 +50,7 @@ export class PluginInitializer {
   }
 
   dispose(): void {
-    this.logger.info("Disposing Garden services...");
+    this.logger.info("Disposing Verdant services...");
     container.clearInstances();
   }
 

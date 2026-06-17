@@ -28,7 +28,7 @@ export const LAYOUT_HTML = `<!DOCTYPE html>
 
   <footer class="garden-footer">
     <div class="garden-footer-inner">
-      <p>Cultivated with <a href="https://obsidian-garden.ai" target="_blank" rel="noopener">Obsidian Garden</a></p>
+      <p>Cultivated with <a href="https://verdant.pub" target="_blank" rel="noopener">Verdant</a></p>
       <p class="garden-footer-stats">{{stats}}</p>
     </div>
   </footer>

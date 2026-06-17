@@ -129,7 +129,7 @@ function createRenderer(): jest.Mocked<MarkdownRendererPort> {
 
 function defaultConfig(): SiteConfig {
   return {
-    title: "My Garden",
+    title: "My Verdant",
     description: "A digital garden",
     baseUrl: "https://test-user.github.io/test-repo",
     themeId: "default",
@@ -236,7 +236,7 @@ describe("Full Publish E2E", (): void => {
       expect(Array.isArray(files)).toBe(true);
       // Should have: 3 note files + index.html + navigation.json + search.json + tags/index.html + 3 tag-detail pages + .nojekyll + feed.xml + assets/theme.css + CNAME = 15
       expect((files as unknown[]).length).toBe(15);
-      expect(pushCall![5]).toBe("chore: update garden");
+      expect(pushCall![5]).toBe("chore: update site");
     });
 
     it("should write cache after successful publish", async (): Promise<void> => {

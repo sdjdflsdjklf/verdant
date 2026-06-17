@@ -1,4 +1,4 @@
-export const DEFAULT_THEME_CSS = `/* Obsidian Garden */
+export const DEFAULT_THEME_CSS = `/* Verdant */
 :root {
   --bg: #faf9f6;
   --bg-elevated: #ffffff;

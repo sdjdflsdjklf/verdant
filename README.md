@@ -1,14 +1,14 @@
 <p align="center">
-  <img src="resources/icons/icon.png" alt="OGarden" width="128" height="128" />
+  <img src="resources/icons/icon.png" alt="Verdant" width="128" height="128" />
 </p>
 
-# OGarden
+# Verdant
 
 <p align="center">
-  <a href="https://github.com/obsidian-garden/obsidian-garden/actions"><img src="https://img.shields.io/github/actions/workflow/status/obsidian-garden/obsidian-garden/ci.yml?branch=main&style=flat-square" alt="CI" /></a>
-  <a href="https://www.npmjs.com/package/obsidian-garden"><img src="https://img.shields.io/github/package-json/v/obsidian-garden/obsidian-garden?style=flat-square" alt="Version" /></a>
+  <a href="https://github.com/verdant-pub/verdant/actions"><img src="https://img.shields.io/github/actions/workflow/status/verdant-pub/verdant/ci.yml?branch=main&style=flat-square" alt="CI" /></a>
+  <a href="https://www.npmjs.com/package/verdant"><img src="https://img.shields.io/github/package-json/v/verdant-pub/verdant?style=flat-square" alt="Version" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License" /></a>
-  <a href="https://coveralls.io/github/obsidian-garden/obsidian-garden"><img src="https://img.shields.io/coverallsCoverage/github/obsidian-garden/obsidian-garden?style=flat-square" alt="Coverage" /></a>
+  <a href="https://coveralls.io/github/verdant-pub/verdant"><img src="https://img.shields.io/coverallsCoverage/github/verdant-pub/verdant?style=flat-square" alt="Coverage" /></a>
   <a href="https://obsidian.md/plugins"><img src="https://img.shields.io/badge/Obsidian-Plugin-8A2BE2?style=flat-square" alt="Obsidian Plugin" /></a>
 </p>
 
@@ -38,8 +38,8 @@
 
 ### Quick Start
 
-1. Install **OGarden** from the Obsidian Community Plugins browser
-2. Open Settings → OGarden
+1. Install **Verdant** from the Obsidian Community Plugins browser
+2. Open Settings → Verdant
 3. Enter your GitHub Personal Access Token (requires `repo` scope)
 4. Configure your repository name and publish branch (default: `gh-pages`)
 5. Click the globe icon in the ribbon or use the command palette to open the Note Selector
@@ -75,8 +75,8 @@ Enter your Pro license key in the settings panel to unlock unlimited notes. Lice
 
 ```bash
 # Clone and install
-git clone https://github.com/obsidian-garden/obsidian-garden.git
-cd obsidian-garden
+git clone https://github.com/verdant-pub/verdant.git
+cd verdant
 npm install
 
 # Build for production
@@ -146,8 +146,8 @@ MIT — see [LICENSE](LICENSE)
 
 ### 快速开始
 
-1. 在 Obsidian 社区插件市场中安装 **OGarden**
-2. 打开设置 → OGarden
+1. 在 Obsidian 社区插件市场中安装 **Verdant**
+2. 打开设置 → Verdant
 3. 输入您的 GitHub Personal Access Token（需要 `repo` 权限）
 4. 配置仓库名称和发布分支（默认为 `gh-pages`）
 5. 点击侧边栏的地球图标或使用命令面板打开笔记选择器
@@ -177,8 +177,8 @@ MIT — see [LICENSE](LICENSE)
 
 ```bash
 # 克隆并安装依赖
-git clone https://github.com/obsidian-garden/obsidian-garden.git
-cd obsidian-garden
+git clone https://github.com/verdant-pub/verdant.git
+cd verdant
 npm install
 
 # 生产构建

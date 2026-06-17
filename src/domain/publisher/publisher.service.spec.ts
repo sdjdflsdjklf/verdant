@@ -133,7 +133,7 @@ tags: [dev]
     );
 
     defaultConfig = {
-      title: "My Garden",
+      title: "My Verdant",
       description: "A digital garden",
       baseUrl: "https://user.github.io/garden",
       themeId: "default",

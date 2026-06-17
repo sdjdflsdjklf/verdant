@@ -7,13 +7,13 @@ import type { LoggerPort } from "../domain/ports";
 // Mock the views
 jest.mock("./components/note-selector.view", (): object => ({
   NoteSelectorView: jest.fn().mockImplementation(() => ({
-    getViewType: jest.fn().mockReturnValue("obsidian-garden-note-selector"),
+    getViewType: jest.fn().mockReturnValue("verdant-note-selector"),
     getDisplayText: jest.fn().mockReturnValue("Note Selector"),
     getIcon: jest.fn().mockReturnValue("globe"),
     onOpen: jest.fn().mockResolvedValue(undefined),
     getSelectedFiles: jest.fn().mockReturnValue([]),
   })),
-  VIEW_TYPE_NOTE_SELECTOR: "obsidian-garden-note-selector",
+  VIEW_TYPE_NOTE_SELECTOR: "verdant-note-selector",
 }));
 
 jest.mock("./components/publish-wizard.view", (): object => ({

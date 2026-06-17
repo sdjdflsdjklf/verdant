@@ -93,7 +93,7 @@ Some content here for excerpt.`;
     service = new SiteGeneratorService(mockRenderer, mockLogger, mockThemeRenderer, mockLinkGraphService, mockVaultRepo);
 
     defaultConfig = {
-      title: "My Garden",
+      title: "My Verdant",
       description: "A digital garden",
       baseUrl: "https://user.github.io/garden",
       themeId: "default",
@@ -115,7 +115,7 @@ Some content here for excerpt.`;
       expect(result.tags).toEqual(["dev", "testing"]);
       expect(result.relativePath).toBe("notes/test-note/index.html");
       expect(result.html).toContain("<!DOCTYPE html>");
-      expect(result.html).toContain("My Garden");
+      expect(result.html).toContain("My Verdant");
       expect(result.html).toContain("Rendered HTML");
       expect(result.date).toBeDefined();
     });
@@ -268,7 +268,7 @@ const result: GeneratedSite = await service.generateSite(
       );
 
       expect(result.indexHtml).toContain("<!DOCTYPE html>");
-      expect(result.indexHtml).toContain("My Garden");
+      expect(result.indexHtml).toContain("My Verdant");
       expect(result.indexHtml).toContain("Indexed Note");
       expect(result.indexHtml).toContain('<a href="');
     });

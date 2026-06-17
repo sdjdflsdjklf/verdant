@@ -13,7 +13,7 @@ describe("PluginConfigService", (): void => {
   const TEST_SETTINGS: Partial<PluginSettings> = {
     githubToken: "ghp_test123",
     githubUsername: "testuser",
-    siteTitle: "Test Garden",
+    siteTitle: "Test Verdant",
     repoName: "test-repo",
   };
 
@@ -57,7 +57,7 @@ describe("PluginConfigService", (): void => {
       service.init(mockStore);
       const result: PluginSettings = await service.load();
       expect(result.githubToken).toBe("ghp_test123");
-      expect(result.siteTitle).toBe("Test Garden");
+      expect(result.siteTitle).toBe("Test Verdant");
       expect(result.publishBranch).toBe("gh-pages");
     });
 
@@ -115,7 +115,7 @@ describe("PluginConfigService", (): void => {
       service.init(mockStore);
       await service.load();
       expect(service.get("githubToken")).toBe("ghp_test123");
-      expect(service.get("siteTitle")).toBe("Test Garden");
+      expect(service.get("siteTitle")).toBe("Test Verdant");
     });
 
     it("should return default for unset key", async (): Promise<void> => {
@@ -132,7 +132,7 @@ describe("PluginConfigService", (): void => {
       const all: PluginSettings = service.getAll();
       expect(all.githubToken).toBe("ghp_test123");
       all.siteTitle = "Hacked";
-      expect(service.get("siteTitle")).toBe("Test Garden");
+      expect(service.get("siteTitle")).toBe("Test Verdant");
     });
   });
 
@@ -149,8 +149,8 @@ describe("PluginConfigService", (): void => {
       service.init(mockStore);
       await service.load();
       mockStore.set.mockClear();
-      const setPromise = service.set("siteTitle", "Updated Garden");
-      expect(service.get("siteTitle")).toBe("Updated Garden");
+      const setPromise = service.set("siteTitle", "Updated Verdant");
+      expect(service.get("siteTitle")).toBe("Updated Verdant");
       expect(mockStore.set).not.toHaveBeenCalled();
       jest.advanceTimersByTime(300);
       await setPromise;
@@ -284,7 +284,7 @@ describe("PluginConfigService", (): void => {
     it("should reset settings to defaults and persist", async (): Promise<void> => {
       service.init(mockStore);
       await service.load();
-      expect(service.get("siteTitle")).toBe("Test Garden");
+      expect(service.get("siteTitle")).toBe("Test Verdant");
       await service.reset();
       expect(service.get("siteTitle")).toBe(DEFAULT_SETTINGS.siteTitle);
       expect(mockStore.set).toHaveBeenCalled();

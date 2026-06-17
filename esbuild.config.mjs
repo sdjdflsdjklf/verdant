@@ -5,7 +5,7 @@ import fs from "fs";
 
 const prod = process.argv[2] === "production";
 
-const outDir = path.resolve("..", ".obsidian", "plugins", "garden-publish");
+const outDir = path.resolve("..", ".obsidian", "plugins", "verdant");
 
 if (!fs.existsSync(outDir)) {
   fs.mkdirSync(outDir, { recursive: true });

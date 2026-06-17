@@ -12,7 +12,7 @@ import { ViewController } from "./presentation/view-controller";
 import { StatusBarView } from "./presentation/components/status-bar.view";
 import { SettingsPanelView } from "./presentation/components/settings-panel.view";
 
-export default class ObsidianGardenPlugin extends Plugin {
+export default class VerdantPlugin extends Plugin {
   public settings: PluginSettings = DEFAULT_SETTINGS;
   private initializer!: PluginInitializer;
   private viewController!: ViewController;
@@ -45,7 +45,7 @@ export default class ObsidianGardenPlugin extends Plugin {
       this.activateView();
     });
 
-    this.addRibbonIcon("globe", "Garden", async (): Promise<void> => {
+    this.addRibbonIcon("globe", "Verdant", async (): Promise<void> => {
       await this.viewController.activateNoteSelector(this);
     });
 
@@ -67,7 +67,7 @@ export default class ObsidianGardenPlugin extends Plugin {
 
     this.addSettingTab(new SettingsPanelView(this.app, this));
 
-    new Notice("Garden loaded");
+    new Notice("Verdant loaded");
   }
 
   public onunload(): void {

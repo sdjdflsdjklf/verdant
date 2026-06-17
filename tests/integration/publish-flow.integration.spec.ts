@@ -71,7 +71,7 @@ function createMockRenderer(): jest.Mocked<MarkdownRendererPort> {
 
 function makeConfig(): SiteConfig {
   return {
-    title: "Integration Garden",
+    title: "Integration Verdant",
     description: "Testing the integration",
     baseUrl: "https://int-user.github.io/int-repo",
     themeId: "default",
@@ -218,7 +218,7 @@ describe("PublisherService ↔ GitHubApiPort Integration", (): void => {
       expect(noteFile).toBeDefined();
       expect(noteFile!.content).toContain("Custom rendered HTML");
       expect(noteFile!.content).toContain("<!DOCTYPE html>");
-      expect(noteFile!.content).toContain("Integration Garden");
+      expect(noteFile!.content).toContain("Integration Verdant");
     });
 
     it("should encode file entries with correct git metadata", async (): Promise<void> => {

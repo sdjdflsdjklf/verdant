@@ -10,7 +10,7 @@ describe("ThemeRenderer", (): void => {
     renderer = new ThemeRenderer();
 
     defaultConfig = {
-      title: "My Garden",
+      title: "My Verdant",
       description: "A digital garden",
       baseUrl: "https://user.github.io/garden",
       themeId: "default",
@@ -61,7 +61,7 @@ describe("ThemeRenderer", (): void => {
       ];
 
       const html: string = renderer.renderIndex(files, defaultConfig);
-      expect(html).toContain("My Garden");
+      expect(html).toContain("My Verdant");
       expect(html).toContain("A digital garden");
       expect(html).toContain("Note 1");
       expect(html).toContain("Note 2");
@@ -70,7 +70,7 @@ describe("ThemeRenderer", (): void => {
 
     it("should handle empty file list", (): void => {
       const html: string = renderer.renderIndex([], defaultConfig);
-      expect(html).toContain("My Garden");
+      expect(html).toContain("My Verdant");
       expect(html).toContain("garden-card-grid");
     });
 
@@ -260,7 +260,7 @@ describe("ThemeRenderer", (): void => {
 
       expect(xml).toContain('<?xml version="1.0" encoding="utf-8"?>');
       expect(xml).toContain('<feed xmlns="http://www.w3.org/2005/Atom">');
-      expect(xml).toContain("<title>My Garden</title>");
+      expect(xml).toContain("<title>My Verdant</title>");
       expect(xml).toContain("<title>Note 1</title>");
       expect(xml).toContain("<title>Note 2</title>");
       expect(xml).toContain("/note-1/");

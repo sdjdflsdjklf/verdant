@@ -10,9 +10,9 @@ export const GIT_BLOB_TYPE = "blob" as const;
 export const GIT_TREE_TYPE = "tree" as const;
 
 /** Commit messages */
-export const COMMIT_MSG_INITIAL = "feat: initialize Obsidian Garden site";
-export const COMMIT_MSG_UPDATE = "chore: update garden";
-export const COMMIT_MSG_REMOVE = "chore: remove files from garden";
+export const COMMIT_MSG_INITIAL = "feat: initialize Verdant site";
+export const COMMIT_MSG_UPDATE = "chore: update site";
+export const COMMIT_MSG_REMOVE = "chore: remove files from site";
 
 /** Required GitHub API scopes (for documentation) */
 export const REQUIRED_SCOPES = ["repo", "public_repo"] as const;
@@ -32,8 +32,8 @@ export const GITHUB_DEVICE_CODE_URL = "https://github.com/login/device/code";
  *
  * IMPORTANT: Replace this with your own registered OAuth App's client ID.
  * To register: GitHub.com → Settings → Developer settings → OAuth Apps → New OAuth App
- *   - Application name: Obsidian Garden
- *   - Homepage URL: https://obsidian-garden.dev (or your site)
+ *   - Application name: Verdant
+ *   - Homepage URL: https://verdant.pub (or your site)
  *   - Authorization callback URL: http://localhost (not used by Device Flow)
  *
  * The Client ID is public and safe to embed in the plugin.

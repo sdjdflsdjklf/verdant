@@ -63,7 +63,7 @@ export class SettingsPanelView extends PluginSettingTab {
       .setDesc("Where the site gets deployed")
       .addText((text): void => {
         text
-          .setPlaceholder("my-obsidian-garden")
+          .setPlaceholder("my-verdant-site")
           .setValue(settings.repoName)
           .onChange(async (val: string): Promise<void> => {
             await this.configService.set("repoName", val);
@@ -90,10 +90,10 @@ export class SettingsPanelView extends PluginSettingTab {
       text: "Unlock unlimited notes and more features. Purchase on Payhip, then paste the license key in the Pro version to activate.",
     });
 
-    const buttonsContainer: HTMLDivElement = container.createDiv({ cls: "obsidian-garden-purchase-buttons" });
+    const buttonsContainer: HTMLDivElement = container.createDiv({ cls: "verdant-purchase-buttons" });
 
     const payhipLink: HTMLAnchorElement = buttonsContainer.createEl("a", {
-      cls: "obsidian-garden-purchase-btn obsidian-garden-purchase-btn--payhip",
+      cls: "verdant-purchase-btn verdant-purchase-btn--payhip",
       href: "https://payhip.com/b/RnYOS",
       text: "Payhip — $19",
     });

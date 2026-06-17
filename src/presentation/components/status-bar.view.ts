@@ -13,19 +13,19 @@ export class StatusBarView {
   }
 
   setIdle(): void {
-    this.statusBarItem.setText("◆ Garden: ready");
+    this.statusBarItem.setText("◆ Verdant: ready");
   }
 
   setPublishing(): void {
-    this.statusBarItem.setText("◇ Garden: publishing...");
+    this.statusBarItem.setText("◇ Verdant: publishing...");
   }
 
   setSuccess(count: number): void {
-    this.statusBarItem.setText(`● Garden: ${count} notes published`);
+    this.statusBarItem.setText(`● Verdant: ${count} notes published`);
   }
 
   setError(): void {
-    this.statusBarItem.setText("● Garden: publish failed");
+    this.statusBarItem.setText("● Verdant: publish failed");
   }
 
   destroy(): void {

@@ -1,10 +1,10 @@
 {
-    "id": "ogarden",
-    "name": "OGarden",
+    "id": "verdant",
+    "name": "Verdant",
     "version": "1.0.2",
     "minAppVersion": "1.7.2",
     "description": "One-click publish your notes as a beautiful website.",
-    "author": "Garden",
+    "author": "Verdant",
     "authorUrl": "",
     "isDesktopOnly": false,
     "fundingUrl": ""

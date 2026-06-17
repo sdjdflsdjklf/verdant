@@ -1,4 +1,4 @@
-export const CSS_VARIABLES = `/* Obsidian Garden */
+export const CSS_VARIABLES = `/* Verdant */
 :root {
   --bg: #faf9f6;
   --bg-elevated: #ffffff;

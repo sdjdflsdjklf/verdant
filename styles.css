@@ -1,4 +1,4 @@
-/* Obsidian Garden — Plugin UI Styles */
+/* Verdant — Plugin UI Styles */
 
 /* ── Note Selector: File Tree ── */
 
@@ -11,7 +11,7 @@
 
 /* Each tree row: truncate long paths with ellipsis */
 .note-selector-view .tree-item-self,
-.obsidian-garden-note-selector .tree-item-self {
+.verdant-note-selector .tree-item-self {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -21,13 +21,13 @@
 
 /* Tree item children also need containment */
 .note-selector-view .tree-item-children,
-.obsidian-garden-note-selector .tree-item-children {
+.verdant-note-selector .tree-item-children {
   overflow: hidden;
 }
 
 /* Folder/file icons — consistent size and no shrink */
 .note-selector-view .tree-item-icon,
-.obsidian-garden-note-selector .tree-item-icon {
+.verdant-note-selector .tree-item-icon {
   flex-shrink: 0;
   width: 16px;
   text-align: center;
@@ -35,7 +35,7 @@
 
 /* Collapse icon */
 .note-selector-view .collapse-icon,
-.obsidian-garden-note-selector .collapse-icon {
+.verdant-note-selector .collapse-icon {
   font-size: 10px;
   cursor: pointer;
   user-select: none;
@@ -43,7 +43,7 @@
 
 /* Checkbox spacing */
 .note-selector-view .checkbox,
-.obsidian-garden-note-selector .checkbox {
+.verdant-note-selector .checkbox {
   flex-shrink: 0;
   margin-right: 4px;
 }
@@ -51,12 +51,12 @@
 /* ── Note Selector: search bar ── */
 
 .note-selector-view .garden-search-container,
-.obsidian-garden-note-selector .garden-search-container {
+.verdant-note-selector .garden-search-container {
   padding: 8px;
 }
 
 .note-selector-view .garden-search-field,
-.obsidian-garden-note-selector .garden-search-field {
+.verdant-note-selector .garden-search-field {
   width: 100%;
   box-sizing: border-box;
   padding-left: 28px;
@@ -68,7 +68,7 @@
 /* ── Note Selector: action bar ── */
 
 .note-selector-view .nav-buttons-container,
-.obsidian-garden-note-selector .nav-buttons-container {
+.verdant-note-selector .nav-buttons-container {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -78,7 +78,7 @@
 
 /* ── Status Bar ── */
 
-.obsidian-garden-status-bar {
+.verdant-status-bar {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -86,7 +86,7 @@
 
 /* ── First-time setup banner ── */
 
-.obsidian-garden-setup-banner {
+.verdant-setup-banner {
   margin: 16px;
   padding: 16px;
   border: 1px solid var(--interactive-accent);
@@ -94,17 +94,17 @@
   background: var(--background-secondary);
 }
 
-.obsidian-garden-setup-banner h3 {
+.verdant-setup-banner h3 {
   margin: 0 0 8px 0;
   color: var(--interactive-accent);
 }
 
-.obsidian-garden-setup-banner ol {
+.verdant-setup-banner ol {
   margin: 0;
   padding-left: 20px;
 }
 
-.obsidian-garden-setup-banner li {
+.verdant-setup-banner li {
   margin-bottom: 4px;
   line-height: 1.6;
 }
@@ -250,14 +250,14 @@
 
 /* ── License Purchase Buttons ── */
 
-.obsidian-garden-purchase-buttons {
+.verdant-purchase-buttons {
   display: flex;
   gap: 12px;
   margin: 12px 0;
   flex-wrap: wrap;
 }
 
-.obsidian-garden-purchase-btn {
+.verdant-purchase-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -271,33 +271,33 @@
   border: none;
 }
 
-.obsidian-garden-purchase-btn:hover {
+.verdant-purchase-btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
   text-decoration: none;
 }
 
-.obsidian-garden-purchase-btn--payhip {
+.verdant-purchase-btn--payhip {
   background: #2ecc71;
   color: #fff;
 }
 
-.obsidian-garden-purchase-btn--payhip:hover {
+.verdant-purchase-btn--payhip:hover {
   color: #fff;
 }
 
 /* ── Device Login Modal ── */
 
-.obsidian-garden-device-login {
+.verdant-device-login {
   padding: 16px;
 }
 
-.obsidian-garden-device-login h3 {
+.verdant-device-login h3 {
   margin: 0 0 12px;
   color: var(--text-normal);
 }
 
-.obsidian-garden-device-login p {
+.verdant-device-login p {
   margin-bottom: 12px;
   color: var(--text-muted);
   line-height: 1.5;
@@ -359,7 +359,7 @@
   display: none;
 }
 
-.obsidian-garden-publish-wizard {
+.verdant-publish-wizard {
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -613,7 +613,7 @@
   pointer-events: none;
 }
 
-.obsidian-garden-publish-wizard .wizard-hidden {
+.verdant-publish-wizard .wizard-hidden {
   display: none;
 }
 
@@ -627,10 +627,10 @@
 
 /* ── Publish Modal ── */
 
-.obsidian-garden-publish-modal .publish-progress-hidden {
+.verdant-publish-modal .publish-progress-hidden {
   display: none;
 }
 
-.obsidian-garden-publish-modal .publish-result-hidden {
+.verdant-publish-modal .publish-result-hidden {
   display: none;
 }

@@ -62,7 +62,7 @@ export class PublishWizardView extends Modal {
     containerEl.setCssProps({ width: "", maxWidth: "" });
 
     contentEl.empty();
-    contentEl.addClass("obsidian-garden-publish-wizard");
+    contentEl.addClass("verdant-publish-wizard");
 
     this.injectStyles();
 
@@ -499,7 +499,7 @@ export class PublishWizardView extends Modal {
   </main>
   <footer class="garden-footer">
     <div class="garden-footer-inner">
-      <p>Cultivated with <a href="https://obsidian-garden.ai" target="_blank" rel="noopener">Garden</a></p>
+      <p>Cultivated with <a href="https://verdant.pub" target="_blank" rel="noopener">Verdant</a></p>
     </div>
   </footer>
   <aside class="preview-sidebar" id="preview-sidebar">
@@ -909,7 +909,7 @@ function buildNotePreviewHtml(content: string, css: string, siteTitle: string): 
   </main>
   <footer class="garden-footer">
     <div class="garden-footer-inner">
-      <p>Cultivated with <a href="https://obsidian-garden.ai" target="_blank" rel="noopener">Garden</a></p>
+      <p>Cultivated with <a href="https://verdant.pub" target="_blank" rel="noopener">Verdant</a></p>
     </div>
   </footer>
 </body>

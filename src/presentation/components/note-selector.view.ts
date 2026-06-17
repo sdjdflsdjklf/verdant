@@ -5,7 +5,7 @@ import { container } from "../../di/container";
 import { DI_TOKENS } from "../../di/tokens";
 import type { PluginConfigService } from "../../config/plugin-config.service";
 
-export const VIEW_TYPE_NOTE_SELECTOR = "obsidian-garden-note-selector";
+export const VIEW_TYPE_NOTE_SELECTOR = "verdant-note-selector";
 
 interface FileNode {
   name: string;
