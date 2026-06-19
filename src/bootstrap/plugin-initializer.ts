@@ -1,8 +1,6 @@
 import { injectable, singleton, inject } from "tsyringe";
 import { container } from "../di/container";
 import { DI_TOKENS } from "../di/tokens";
-import { HttpClient } from "../infrastructure/http/http.client";
-import { obsidianHttpInterceptor } from "./obsidian-http.interceptor";
 import { PluginDataStore } from "../infrastructure/storage/plugin-data.store";
 
 import type { LoggerPort } from "../domain/ports";
@@ -61,9 +59,6 @@ export class PluginInitializer {
   }
 
   private registerAll(): void {
-    const httpClient = container.resolve<HttpClient>(DI_TOKENS.HttpClient);
-    httpClient.addInterceptor(obsidianHttpInterceptor);
-
     container.registerSingleton(DI_TOKENS.GitHubAuthService, GithubAuthService);
     container.registerSingleton(DI_TOKENS.GitHubRepoService, GithubRepoService);
     container.registerSingleton(DI_TOKENS.GitHubPagesService, GithubPagesService);
