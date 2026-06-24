@@ -5,6 +5,12 @@ All notable changes to Verdant are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-06-24
+
+### Fixed
+- Fix `esbuild.config.mjs` to output `main.js` to project root for release builds
+- Remove residual `rejectUnauthorized: false` from stale build artifact
+
 ## [1.0.3] - 2026-06-19
 
 ### Fixed
