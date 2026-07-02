@@ -38,6 +38,8 @@ export interface LinkGraph {
   slugToTitle: Map<string, string>;
   backlinks: Map<string, Set<string>>;
   slugToRepoPath: Map<string, string>;
+  /** Maps slugified link names / folder paths / titles to published clean URLs. */
+  linkNameToUrl: Map<string, string>;
 }
 
 export interface RelatedNoteEntry {
@@ -54,6 +56,7 @@ export class LinkGraphService {
     const slugToTitle: Map<string, string> = new Map();
     const backlinks: Map<string, Set<string>> = new Map();
     const slugToRepoPath: Map<string, string> = new Map();
+    const linkNameToUrl: Map<string, string> = new Map();
 
     const slugToFile: Map<string, PublishFile> = new Map();
     for (const note of notes) {
@@ -64,9 +67,29 @@ export class LinkGraphService {
 
     const linkNameToFileSlug: Map<string, string> = new Map();
     for (const [slug, file] of slugToFile) {
-      linkNameToFileSlug.set(slug, slug);
       const title: string = this.extractTitleFromContent(file.content);
-      linkNameToFileSlug.set(slugify(title), slug);
+      const repoPath: string = notePathToRepoPath(file.relativePath);
+      const url: string = repoPath.replace(/\/index\.html$/, "/");
+
+      // Map the file name slug to its published URL.
+      linkNameToFileSlug.set(slug, slug);
+      linkNameToUrl.set(slug, url);
+
+      // Map the full slugified path to the URL (supports [[folder/note]]).
+      const fullPathSlug: string = file.relativePath
+        .replace(/\.md$/i, "")
+        .replace(/\\/g, "/")
+        .split("/")
+        .map((segment) => slugify(segment))
+        .join("/");
+      linkNameToUrl.set(fullPathSlug, url);
+
+      // Map the slugified title to the URL (supports [[Note Title]]).
+      const titleSlug: string = slugify(title);
+      if (titleSlug.length > 0) {
+        linkNameToFileSlug.set(titleSlug, slug);
+        linkNameToUrl.set(titleSlug, url);
+      }
     }
 
     for (const [slug, file] of slugToFile) {
@@ -92,7 +115,32 @@ export class LinkGraphService {
       }
     }
 
-    return { edges, slugToTitle, backlinks, slugToRepoPath };
+    return { edges, slugToTitle, backlinks, slugToRepoPath, linkNameToUrl };
+  }
+
+  /**
+   * Resolve a WikiLink to the published clean URL of the target note.
+   * Returns undefined when no matching note is found.
+   */
+  public resolveWikiLink(link: WikiLink, graph: LinkGraph): string | undefined {
+    const nameKey: string = slugify(link.name);
+    if (nameKey.length === 0) {
+      return undefined;
+    }
+
+    if (link.folder !== undefined && link.folder.trim().length > 0) {
+      const folderKey: string = link.folder
+        .split("/")
+        .map((segment) => slugify(segment))
+        .join("/");
+      const fullKey: string = `${folderKey}/${nameKey}`;
+      const folderMatch: string | undefined = graph.linkNameToUrl.get(fullKey);
+      if (folderMatch !== undefined) {
+        return folderMatch;
+      }
+    }
+
+    return graph.linkNameToUrl.get(nameKey);
   }
 
   public getRelatedNotes(

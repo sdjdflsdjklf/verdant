@@ -96,6 +96,67 @@ describe("LinkGraphService", (): void => {
       const graph: LinkGraph = service.buildGraph(notes);
       expect(graph.edges.get("a")?.has("b")).toBe(true);
     });
+
+    it("should map file names, full paths, and titles to published URLs", (): void => {
+      const notes: PublishFile[] = [
+        makeFile("AI_Actions/ARCHITECTURE.md", "---\ntitle: Architecture Overview\n---\nContent"),
+      ];
+
+      const graph: LinkGraph = service.buildGraph(notes);
+
+      expect(graph.linkNameToUrl.get("architecture")).toBe("ai_actions/architecture/");
+      expect(graph.linkNameToUrl.get("ai_actions/architecture")).toBe("ai_actions/architecture/");
+      expect(graph.linkNameToUrl.get("architecture-overview")).toBe("ai_actions/architecture/");
+    });
+  });
+
+  describe("resolveWikiLink", (): void => {
+    it("should resolve a link by file name slug", (): void => {
+      const notes: PublishFile[] = [
+        makeFile("AI_Actions/ARCHITECTURE.md", "---\ntitle: Architecture\n---\nContent"),
+      ];
+
+      const graph: LinkGraph = service.buildGraph(notes);
+      const url: string | undefined = service.resolveWikiLink({ name: "ARCHITECTURE" }, graph);
+
+      expect(url).toBe("ai_actions/architecture/");
+    });
+
+    it("should resolve a link by full folder path", (): void => {
+      const notes: PublishFile[] = [
+        makeFile("AI_Actions/ARCHITECTURE.md", "---\ntitle: Architecture\n---\nContent"),
+      ];
+
+      const graph: LinkGraph = service.buildGraph(notes);
+      const url: string | undefined = service.resolveWikiLink(
+        { name: "ARCHITECTURE", folder: "AI_Actions" },
+        graph,
+      );
+
+      expect(url).toBe("ai_actions/architecture/");
+    });
+
+    it("should resolve a link by title slug", (): void => {
+      const notes: PublishFile[] = [
+        makeFile("notes/b.md", "---\ntitle: Note B\n---\nContent"),
+      ];
+
+      const graph: LinkGraph = service.buildGraph(notes);
+      const url: string | undefined = service.resolveWikiLink({ name: "Note B" }, graph);
+
+      expect(url).toBe("notes/b/");
+    });
+
+    it("should return undefined for unresolved links", (): void => {
+      const notes: PublishFile[] = [
+        makeFile("notes/a.md", "---\ntitle: Note A\n---\nContent"),
+      ];
+
+      const graph: LinkGraph = service.buildGraph(notes);
+      const url: string | undefined = service.resolveWikiLink({ name: "Ghost Note" }, graph);
+
+      expect(url).toBeUndefined();
+    });
   });
 
   describe("getRelatedNotes", (): void => {

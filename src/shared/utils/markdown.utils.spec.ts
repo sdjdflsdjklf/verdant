@@ -152,19 +152,19 @@ date: 1716000000000
     it("should replace WikiLinks with anchor tags", (): void => {
       const content = "See [[My Note]].";
       const result = replaceWikiLinks(content, (name: string, _folder?: string): string => `/notes/${name.toLowerCase().replace(/\s+/g, "-")}`);
-      expect(result).toBe('See <a href="/notes/my-note">My Note</a>.');
+      expect(result).toBe('See [My Note](</notes/my-note>).');
     });
 
     it("should use alias as display text", (): void => {
       const content = "See [[Really Long Name|short]].";
       const result = replaceWikiLinks(content, (name: string, _folder?: string): string => `/notes/${name.toLowerCase().replace(/\s+/g, "-")}`);
-      expect(result).toBe('See <a href="/notes/really-long-name">short</a>.');
+      expect(result).toBe('See [short](</notes/really-long-name>).');
     });
 
     it("should handle empty resolve function gracefully", (): void => {
       const content = "[[Test]]";
       const result = replaceWikiLinks(content, (): string => "#");
-      expect(result).toBe('<a href="#">Test</a>');
+      expect(result).toBe('[Test](<#>)');
     });
 
     it("should include folder path in href when folder exists", (): void => {
@@ -173,7 +173,7 @@ date: 1716000000000
         const prefix = folder ? `${folder}/` : "";
         return `/${prefix}${name.toLowerCase().replace(/\s+/g, "-")}.html`;
       });
-      expect(result).toBe('See <a href="/projects/my-project.html">My Project</a>.');
+      expect(result).toBe('See [My Project](</projects/my-project.html>).');
     });
 
     it("should not include folder when not present", (): void => {
@@ -182,7 +182,7 @@ date: 1716000000000
         const prefix = folder ? `${folder}/` : "";
         return `/${prefix}${name.toLowerCase().replace(/\s+/g, "-")}.html`;
       });
-      expect(result).toBe('See <a href="/my-note.html">My Note</a>.');
+      expect(result).toBe('See [My Note](</my-note.html>).');
     });
 
     it("should handle folder and alias together", (): void => {
@@ -191,7 +191,7 @@ date: 1716000000000
         const prefix = folder ? `${folder}/` : "";
         return `/${prefix}${name.toLowerCase().replace(/\s+/g, "-")}.html`;
       });
-      expect(result).toBe('See <a href="/projects/my-project.html">proj</a>.');
+      expect(result).toBe('See [proj](</projects/my-project.html>).');
     });
   });
 });

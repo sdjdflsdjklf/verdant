@@ -32,8 +32,8 @@
 - **Navigation tree** — Auto-generated folder-based navigation
 - **Free tier** — Publish up to 10 notes for free
 - **Pro upgrade** — $19 one-time purchase unlocks unlimited notes, custom domain, custom CSS
-- **Zero backend** — GitHub PAT authentication, RSA-2048 local license validation
-- **Privacy-first** — No external servers, no user tracking, no data collection
+- **GitHub Pages hosting** — GitHub PAT authentication, no backend required for publishing
+- **Privacy-first** — No user tracking, no data collection
 - **Hexagonal architecture** — 99.9% test coverage, TypeScript strict mode
 
 ### Quick Start
@@ -69,7 +69,7 @@ Choose between **Default Light** and **Dark Mode** in the settings panel. Custom
 
 #### License
 
-Enter your Pro license key in the settings panel to unlock unlimited notes. License validation is fully local using RSA-2048 — no network call, no backend, no data sent anywhere.
+Enter your Pro license key in the settings panel to unlock unlimited notes. The Free version publishes up to 10 notes with no license required.
 
 ### Development
 
@@ -105,7 +105,7 @@ src/
 │   ├── github/     # GitHub auth, repo, Pages services
 │   ├── publisher/  # Site generator, diff engine, publish orchestration
 │   ├── theme/      # Theme registry, renderer, service
-│   └── license/    # RSA-2048 license validation
+│   └── license/    # License validation
 ├── infrastructure/ # Adapter implementations (HTTP, cache, Obsidian API)
 ├── config/         # Plugin settings with schema validation
 ├── di/             # tsyringe dependency injection container
@@ -140,8 +140,8 @@ MIT — see [LICENSE](LICENSE)
 - **导航目录** — 基于文件夹结构自动生成导航
 - **免费层** — 免费发布最多 10 篇笔记
 - **专业版升级** — 一次性付费 $19，解锁无限笔记、自定义域名和自定义 CSS
-- **零后端** — 使用 GitHub PAT 认证，RSA-2048 本地许可证验证
-- **隐私优先** — 无外部服务器，无用户追踪，无数据收集
+- **GitHub Pages 托管** — 使用 GitHub PAT 认证，发布无需后端服务
+- **隐私优先** — 无用户追踪，无数据收集
 - **六边形架构** — 99.9% 测试覆盖率，TypeScript 严格模式
 
 ### 快速开始
@@ -171,7 +171,7 @@ MIT — see [LICENSE](LICENSE)
 
 #### 许可证
 
-在设置面板中输入您的专业版许可证密钥，即可解锁无限笔记。许可证验证完全在本地通过 RSA-2048 完成 — 无需网络请求，无需后端服务，无数据发送。
+在设置面板中输入您的专业版许可证密钥，即可解锁无限笔记。免费版可发布最多 10 篇笔记，无需许可证。
 
 ### 开发指南
 
@@ -207,7 +207,7 @@ src/
 │   ├── github/     # GitHub 认证、仓库、Pages 服务
 │   ├── publisher/  # 站点生成器、差异引擎、发布编排
 │   ├── theme/      # 主题注册、渲染器、服务
-│   └── license/    # RSA-2048 许可证验证
+│   └── license/    # 许可证验证
 ├── infrastructure/ # 适配器实现（HTTP、缓存、Obsidian API）
 ├── config/         # 插件设置与模式验证
 ├── di/             # tsyringe 依赖注入容器

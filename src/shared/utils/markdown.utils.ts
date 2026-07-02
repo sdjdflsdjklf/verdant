@@ -75,13 +75,8 @@ export function parseWikiLinks(content: string): WikiLink[] {
   return links;
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+function escapeMarkdownLinkText(str: string): string {
+  return str.replace(/\\/g, "\\\\").replace(/\]/g, "\\]").replace(/\[/g, "\\[");
 }
 
 export function replaceWikiLinks(
@@ -93,12 +88,12 @@ export function replaceWikiLinks(
     (_match, folder: string | undefined, noteName: string, heading: string | undefined, alias: string | undefined) => {
       const name = noteName.trim();
       const folderPath: string | undefined = folder?.trim() || undefined;
-      const label = escapeHtml(alias?.trim() ?? name);
-      let href = escapeHtml(resolvePath(name, folderPath));
+      const label = escapeMarkdownLinkText(alias?.trim() ?? name);
+      let href = resolvePath(name, folderPath);
       if (heading !== undefined && heading.trim().length > 0) {
-        href += `#${escapeHtml(heading.trim())}`;
+        href += `#${heading.trim()}`;
       }
-      return `<a href="${href}">${label}</a>`;
+      return `[${label}](<${href}>)`;
     },
   );
 }

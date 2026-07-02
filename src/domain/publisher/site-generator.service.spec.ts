@@ -85,9 +85,11 @@ Some content here for excerpt.`;
         slugToTitle: new Map(),
         backlinks: new Map(),
         slugToRepoPath: new Map(),
+        linkNameToUrl: new Map(),
       }),
       getRelatedNotes: jest.fn().mockReturnValue([]),
       getPrevNext: jest.fn().mockReturnValue({}),
+      resolveWikiLink: jest.fn().mockReturnValue(undefined),
     } as unknown as jest.Mocked<LinkGraphService>;
 
     service = new SiteGeneratorService(mockRenderer, mockLogger, mockThemeRenderer, mockLinkGraphService, mockVaultRepo);
@@ -124,7 +126,7 @@ Some content here for excerpt.`;
       await service.generateFile(samplePublishFile, defaultConfig);
 
       expect(mockRenderer.render).toHaveBeenCalledWith(
-        expect.stringContaining('/wiki-link/'),
+        expect.stringContaining('[Wiki Link](<https://user.github.io/garden/wiki-link/>)'),
         "notes/test-note.md",
       );
     });

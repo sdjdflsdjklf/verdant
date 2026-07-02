@@ -109,7 +109,20 @@ export class SiteGeneratorService {
 
     const contentWithResolvedLinks = replaceWikiLinks(
       bodyContent,
-      (noteName: string, _folder?: string): string => notePathToCleanUrl(noteName),
+      (noteName: string, folder?: string): string => {
+        let path: string;
+        if (linkGraph !== undefined) {
+          const resolved: string | undefined = this.linkGraphService.resolveWikiLink(
+            { name: noteName, folder },
+            linkGraph,
+          );
+          path = resolved ?? notePathToCleanUrl(noteName);
+        } else {
+          path = notePathToCleanUrl(noteName);
+        }
+        const cleanPath: string = path.startsWith("/") ? path.slice(1) : path;
+        return `${config.baseUrl}/${cleanPath}`;
+      },
     );
 
     const renderedHtml: string = await this.renderer.render(
